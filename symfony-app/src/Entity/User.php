@@ -36,6 +36,9 @@ class User
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $bio = null;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $phoenixToken = null;
+
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Photo::class, cascade: ['persist', 'remove'])]
     private Collection $photos;
 
@@ -112,6 +115,17 @@ class User
     public function setBio(?string $bio): self
     {
         $this->bio = $bio;
+        return $this;
+    }
+
+    public function getPhoenixToken(): ?string
+    {
+        return $this->phoenixToken;
+    }
+
+    public function setPhoenixToken(?string $phoenixToken): static
+    {
+        $this->phoenixToken = $phoenixToken;
         return $this;
     }
 
