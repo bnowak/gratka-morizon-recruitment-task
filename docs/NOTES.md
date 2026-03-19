@@ -26,7 +26,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
 
 - [ ] Zadanie 1 - zadbaj o jakość kodu oraz rozwiązań w projekcie SymfonyApp
     - [ ] poprawki w composer.json
-    - [ ] poprawki w Dockerfiles + entrypoint (zmergowanie części wspólnych, uprawnienia usera)
+    - [x] poprawki w Dockerfiles + entrypoint (zmergowanie części wspólnych, uprawnienia usera)
     - [ ] aktualizacja PHP do 8.5
         - [ ] wszystkie możliwe klasy `final readonly`
     - [ ] sprawdzić walidacje schematu bazy

@@ -1,28 +1,31 @@
-FROM php:8.1-cli as base
-FROM base as dev
+FROM php:8.1-cli AS base
 
 RUN apt-get update && apt-get install -y git unzip libpq-dev libxml2-dev \
     && docker-php-ext-install pdo pdo_pgsql xml
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-COPY ./entrypoint.sh /entrypoint.sh
+RUN groupadd -g 1000 app && useradd -u 1000 -g app -m app
 
 WORKDIR /app
+RUN chown app:app /app
+
+FROM base AS dev
+
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+USER app
 
 EXPOSE 8000
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-FROM base as prod
+FROM base AS prod
 
-RUN apt-get update && apt-get install -y git unzip libpq-dev libxml2-dev \
-    && docker-php-ext-install pdo pdo_pgsql xml
+USER app
 
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-WORKDIR /app
-COPY . .
+COPY --chown=app:app . .
 
 RUN composer install
 
