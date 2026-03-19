@@ -13,8 +13,6 @@ RUN mix local.hex --force && mix local.rebar --force
 
 FROM base AS dev
 
-ENV MIX_ENV=dev
-
 USER root
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
