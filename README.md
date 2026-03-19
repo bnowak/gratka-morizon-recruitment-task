@@ -51,9 +51,15 @@ docker compose exec symfony php bin/console cache:clear
 docker compose restart symfony
 ```
 
+### Przygotowanie bazy danych testowej
+```bash
+docker compose exec symfony php bin/console doctrine:database:create --env=test
+docker compose exec symfony php bin/console doctrine:migrations:migrate --no-interaction --env=test
+```
+
 ### Uruchamianie testów
 ```bash
-docker compose exec symfony php bin/phpunit
+docker compose exec symfony php vendor/bin/phpunit
 ```
 
 ## Komendy Phoenix
