@@ -21,6 +21,7 @@ abstract class AbstractController extends WebTestCase
     protected function setUp(): void
     {
         $this->client = static::createClient();
+        $this->client->disableReboot();
         $this->em = static::getContainer()->get(EntityManagerInterface::class);
         $this->authTokenRepository = static::getContainer()->get(AuthTokenRepository::class);
     }
