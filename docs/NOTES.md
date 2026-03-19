@@ -19,7 +19,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
 ## Testy
 
 - [x] funkcjonalne
-- [ ] integracyjne
+- [x] integracyjne
 - [ ] jednostkowe
 
 ## Zadania
@@ -55,7 +55,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] dodać logowanie istotnych akcji w aplikacji (monolog)
     - [ ] naprawa warningów zwracanych przez testy z phoenix app
 - [x] Zadanie 2 - Dodaj funkcjonalność importu zdjęć do SymfonyApp z PhoenixApi
-- [ ] Zadanie 3 - Filtrowanie zdjęć na stronie głównej
+- [x] Zadanie 3 - Filtrowanie zdjęć na stronie głównej
 - [ ] Zadanie 4 - Zaimplementuj rate-limiting w aplikacji PhoenixApi
 
 ## Co jeszcze bym usprawnił mając więcej czasu
