@@ -227,6 +227,13 @@
                     <button type="submit" class="save-token-btn">Save Token</button>
                 </form>
             </div>
+
+            <div class="profile-field">
+                <div class="profile-field-label">Photos</div>
+                <form method="post" action="{{ path('photo_import_from_phoenix') }}">
+                    <button type="submit" class="save-token-btn">Import photos</button>
+                </form>
+            </div>
         </div>
         
         {% if user.bio %}

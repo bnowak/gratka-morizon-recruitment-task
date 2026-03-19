@@ -52,6 +52,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] przerobić \App\Command\SeedDatabaseCommand na invokable command (albo usunąć całkowicie po zaimplementowaniu powyższego)
     - [ ] oznaczyć wszystkie routes poprawnymi metodami HTTP
     - [ ] użyj Symfony Forms na stronie profilowej
+    - [ ] dodać logowanie istotnych akcji w aplikacji (monolog)
 - [ ] Zadanie 2 - Dodaj funkcjonalność importu zdjęć do SymfonyApp z PhoenixApi
 - [ ] Zadanie 3 - Filtrowanie zdjęć na stronie głównej
 - [ ] Zadanie 4 - Zaimplementuj rate-limiting w aplikacji PhoenixApi
