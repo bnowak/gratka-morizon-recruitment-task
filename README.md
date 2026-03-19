@@ -12,15 +12,15 @@ Ten projekt składa się z dwóch oddzielnych aplikacji z własnymi bazami danyc
 
 ## Szybki start
 ```bash
-docker-compose up -d
+docker compose up -d
 
 # Konfiguracja bazy danych Symfony
-docker-compose exec symfony php bin/console doctrine:migrations:migrate --no-interaction
-docker-compose exec symfony php bin/console app:seed
+docker compose exec symfony php bin/console doctrine:migrations:migrate --no-interaction
+docker compose exec symfony php bin/console app:seed
 
 # Konfiguracja bazy danych Phoenix
-docker-compose exec phoenix mix ecto.migrate
-docker-compose exec phoenix mix run priv/repo/seeds.exs
+docker compose exec phoenix mix ecto.migrate
+docker compose exec phoenix mix run priv/repo/seeds.exs
 ```
 
 Dostęp do aplikacji:
@@ -31,55 +31,55 @@ Dostęp do aplikacji:
 
 ### Migracja bazy danych
 ```bash
-docker-compose exec symfony php bin/console doctrine:migrations:migrate --no-interaction
+docker compose exec symfony php bin/console doctrine:migrations:migrate --no-interaction
 ```
 
 ### Ponowne tworzenie bazy danych
 ```bash
-docker-compose exec symfony php bin/console doctrine:schema:drop --force --full-database
-docker-compose exec symfony php bin/console doctrine:migrations:migrate --no-interaction
-docker-compose exec symfony php bin/console app:seed
+docker compose exec symfony php bin/console doctrine:schema:drop --force --full-database
+docker compose exec symfony php bin/console doctrine:migrations:migrate --no-interaction
+docker compose exec symfony php bin/console app:seed
 ```
 
 ### Czyszczenie pamięci podręcznej (Cache)
 ```bash
-docker-compose exec symfony php bin/console cache:clear
+docker compose exec symfony php bin/console cache:clear
 ```
 
 ### Restart
 ```bash
-docker-compose restart symfony
+docker compose restart symfony
 ```
 
 ### Uruchamianie testów
 ```bash
-docker-compose exec symfony php bin/phpunit
+docker compose exec symfony php bin/phpunit
 ```
 
 ## Komendy Phoenix
 
 ### Migracja bazy danych
 ```bash
-docker-compose exec phoenix mix ecto.migrate
+docker compose exec phoenix mix ecto.migrate
 ```
 
 ### Seedowanie bazy danych
 ```bash
-docker-compose exec phoenix mix run priv/repo/seeds.exs
+docker compose exec phoenix mix run priv/repo/seeds.exs
 ```
 
 ### Ponowne tworzenie bazy danych
 ```bash
-docker-compose exec phoenix mix ecto.reset
-docker-compose exec phoenix mix run priv/repo/seeds.exs
+docker compose exec phoenix mix ecto.reset
+docker compose exec phoenix mix run priv/repo/seeds.exs
 ```
 
 ### Restart
 ```bash
-docker-compose restart phoenix
+docker compose restart phoenix
 ```
 
 ### Uruchamianie testów
 ```bash
-docker-compose exec phoenix mix test
+docker compose exec phoenix mix test
 ```
