@@ -18,7 +18,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
 
 ## Testy
 
-- [ ] funkcjonalne
+- [x] funkcjonalne
 - [ ] integracyjne
 - [ ] jednostkowe
 
