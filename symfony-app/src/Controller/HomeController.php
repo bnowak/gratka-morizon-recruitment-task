@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Form\PhotoFiltersType;
 use App\Likes\LikeRepository;
 use App\Repository\PhotoRepository;
 use App\Repository\UserRepository;
@@ -21,7 +22,11 @@ class HomeController extends AbstractController
      */
     public function index(Request $request, PhotoRepository $photoRepository, LikeRepository $likeRepository, UserRepository $userRepository): Response
     {
-        $photos = $photoRepository->findAllWithUsers();
+        $form = $this->createForm(PhotoFiltersType::class);
+        $form->handleRequest($request);
+
+        $filters = $form->isSubmitted() && $form->isValid() ? $form->getData() : null;
+        $photos = $photoRepository->findAllWithUsers($filters);
 
         $session = $request->getSession();
         $userId = $session->get('user_id');
@@ -41,6 +46,7 @@ class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig', [
             'photos' => $photos,
+            'filterForm' => $form->createView(),
             'currentUser' => $currentUser,
             'userLikes' => $userLikes,
         ]);

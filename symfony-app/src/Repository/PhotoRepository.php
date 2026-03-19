@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Entity\Photo;
 use App\Entity\User;
+use App\Request\PhotoFilters;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,14 +20,40 @@ class PhotoRepository extends ServiceEntityRepository
         parent::__construct($registry, Photo::class);
     }
 
-    public function findAllWithUsers(): array
+    /** @return Photo[] */
+    public function findAllWithUsers(?PhotoFilters $filters = null): array
     {
-        return $this->createQueryBuilder('p')
+        $qb = $this->createQueryBuilder('p')
             ->leftJoin('p.user', 'u')
             ->addSelect('u')
-            ->orderBy('p.id', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->orderBy('p.id', 'ASC');
+
+        if ($filters?->location !== null) {
+            $qb->andWhere('p.location LIKE :location')
+               ->setParameter('location', '%' . $filters->location . '%');
+        }
+        if ($filters?->camera !== null) {
+            $qb->andWhere('p.camera LIKE :camera')
+               ->setParameter('camera', '%' . $filters->camera . '%');
+        }
+        if ($filters?->description !== null) {
+            $qb->andWhere('p.description LIKE :description')
+               ->setParameter('description', '%' . $filters->description . '%');
+        }
+        if ($filters?->username !== null) {
+            $qb->andWhere('u.username LIKE :username')
+               ->setParameter('username', '%' . $filters->username . '%');
+        }
+        if ($filters?->takenAtFrom !== null) {
+            $qb->andWhere('p.takenAt >= :takenAtFrom')
+               ->setParameter('takenAtFrom', $filters->takenAtFrom);
+        }
+        if ($filters?->takenAtTo !== null) {
+            $qb->andWhere('p.takenAt <= :takenAtTo')
+               ->setParameter('takenAtTo', $filters->takenAtTo);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     /** @return int[] */
