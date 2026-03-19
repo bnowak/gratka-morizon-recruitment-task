@@ -48,6 +48,8 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [x] stworzyć AuthTokenRepository oraz UserRepository i wynieść zapytania SQL z \App\Controller\AuthController::login do nich, zaadresować SQJ injection
     - [ ] użyć mechanizmów Symfony do pokrycia endpointów autoryzacji z \App\Controller\AuthController
     - [ ] obsłużyć porzucone biblioteki raportowane przez composera
+    - [ ] usprawnić ładowanie i zarządzanie fixturkami (\App\Command\SeedDatabaseCommand), np. użyć https://packagist.org/packages/nelmio/alice
+    - [ ] przerobić \App\Command\SeedDatabaseCommand na invokable command (albo usunąć całkowicie po zaimplementowaniu powyższego)
 - [ ] Zadanie 2 - Dodaj funkcjonalność importu zdjęć do SymfonyApp z PhoenixApi
 - [ ] Zadanie 3 - Filtrowanie zdjęć na stronie głównej
 - [ ] Zadanie 4 - Zaimplementuj rate-limiting w aplikacji PhoenixApi
