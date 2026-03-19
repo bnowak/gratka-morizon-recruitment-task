@@ -7,6 +7,7 @@ namespace App\Tests\Functional\Controller;
 use App\Entity\AuthToken;
 use App\Entity\Photo;
 use App\Entity\User;
+use App\Repository\AuthTokenRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -15,11 +16,13 @@ abstract class AbstractController extends WebTestCase
 {
     protected KernelBrowser $client;
     protected EntityManagerInterface $em;
+    protected AuthTokenRepository $authTokenRepository;
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
         $this->em = static::getContainer()->get(EntityManagerInterface::class);
+        $this->authTokenRepository = static::getContainer()->get(AuthTokenRepository::class);
     }
 
     protected function createUser(string $username = 'testuser', string $email = 'testuser@example.com'): User
@@ -45,7 +48,7 @@ abstract class AbstractController extends WebTestCase
             $user = $this->createUser();
         }
 
-        $authToken = $this->em->getRepository(AuthToken::class)->findOneBy(['user' => $user]);
+        $authToken = $this->authTokenRepository->findOneBy(['user' => $user]);
 
         $this->client->request('GET', '/auth/' . $user->getUsername() . '/' . $authToken->getToken());
         $this->client->followRedirect();

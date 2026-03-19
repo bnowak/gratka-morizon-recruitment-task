@@ -45,7 +45,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] w kontrolerach wstrzykiwać bezpośrednio konkretne repozytoria zamiast poprzez EntityManager
     - [ ] \App\Controller\ProfileController::profile pobrać id usera z sesji bezpośrendio a nie poprzez Request
     - [ ] stworzyć helper metodę? do pobrania zalogowanego usera w kontrolerach
-    - [ ] stworzyć AuthTokenRepository oraz UserRepository i wynieść zapytania SQL z \App\Controller\AuthController::login do nich, zaadresować SQJ injection
+    - [x] stworzyć AuthTokenRepository oraz UserRepository i wynieść zapytania SQL z \App\Controller\AuthController::login do nich, zaadresować SQJ injection
     - [ ] użyć mechanizmów Symfony do pokrycia endpointów autoryzacji z \App\Controller\AuthController
     - [ ] obsłużyć porzucone biblioteki raportowane przez composera
 - [ ] Zadanie 2 - Dodaj funkcjonalność importu zdjęć do SymfonyApp z PhoenixApi

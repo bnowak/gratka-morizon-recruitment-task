@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Likes\LikeRepository;
 use App\Repository\PhotoRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,11 +19,8 @@ class HomeController extends AbstractController
      * @Route("/", name="home")
      * @return JsonResponse
      */
-    public function index(Request $request, EntityManagerInterface $em, ManagerRegistry $managerRegistry): Response
+    public function index(Request $request, PhotoRepository $photoRepository, LikeRepository $likeRepository, UserRepository $userRepository): Response
     {
-        $photoRepository = new PhotoRepository($managerRegistry);
-        $likeRepository = new LikeRepository($managerRegistry);
-
         $photos = $photoRepository->findAllWithUsers();
 
         $session = $request->getSession();
@@ -34,7 +29,7 @@ class HomeController extends AbstractController
         $userLikes = [];
 
         if ($userId) {
-            $currentUser = $em->getRepository(User::class)->find($userId);
+            $currentUser = $userRepository->find($userId);
 
             if ($currentUser) {
                 foreach ($photos as $photo) {
