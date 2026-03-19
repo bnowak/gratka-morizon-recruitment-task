@@ -145,6 +145,31 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+
+        .token-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            margin-top: 8px;
+            box-sizing: border-box;
+        }
+
+        .save-token-btn {
+            margin-top: 10px;
+            padding: 10px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .save-token-btn:hover {
+            opacity: 0.9;
+        }
     </style>
 {% endblock %}
 
@@ -188,6 +213,20 @@
                     </div>
                 </div>
             {% endif %}
+
+            <div class="profile-field token-field">
+                <div class="profile-field-label">Phoenix API Token</div>
+                <form method="post" action="{{ path('profile_save_token') }}">
+                    <input
+                        type="password"
+                        name="phoenix_token"
+                        class="token-input"
+                        value="{{ user.phoenixToken|default('') }}"
+                        placeholder="Paste your Phoenix API token here"
+                    >
+                    <button type="submit" class="save-token-btn">Save Token</button>
+                </form>
+            </div>
         </div>
         
         {% if user.bio %}

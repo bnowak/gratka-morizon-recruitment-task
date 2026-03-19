@@ -28,4 +28,36 @@ class ProfileControllerTest extends AbstractController
         $this->assertStringContainsString('28 years old', $content);
         $this->assertSelectorTextContains('.profile-bio-text', 'Photography enthusiast.');
     }
+
+    public function testSaveTokenRequiresLogin(): void
+    {
+        $this->client->request('POST', '/profile/save-token', ['phoenix_token' => 'abc']);
+        $this->assertResponseRedirects('/');
+    }
+
+    public function testSaveTokenPersistsValue(): void
+    {
+        $this->logIn();
+
+        $this->client->request('POST', '/profile/save-token', ['phoenix_token' => 'my-secret-token']);
+
+        $this->assertResponseRedirects('/profile');
+        $this->client->followRedirect();
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('.flash-message.success', 'Phoenix API token saved successfully.');
+        $this->assertSelectorExists('input[name="phoenix_token"][value="my-secret-token"]');
+    }
+
+    public function testSaveTokenCanBeCleared(): void
+    {
+        $this->logIn();
+
+        $this->client->request('POST', '/profile/save-token', ['phoenix_token' => 'initial-token']);
+        $this->client->followRedirect();
+
+        $this->client->request('POST', '/profile/save-token', ['phoenix_token' => '']);
+        $this->assertResponseRedirects('/profile');
+        $this->client->followRedirect();
+        $this->assertSelectorTextContains('.flash-message.success', 'Phoenix API token saved successfully.');
+    }
 }
