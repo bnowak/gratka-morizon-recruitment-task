@@ -42,13 +42,13 @@ docker compose up -d
 
 ```bash
 # Run all tests
-docker compose exec symfony php bin/phpunit
+docker compose exec symfony php vendor/bin/phpunit
 
 # Run a single test file
-docker compose exec symfony php bin/phpunit tests/path/to/TestFile.php
+docker compose exec symfony php vendor/bin/phpunit tests/path/to/TestFile.php
 
 # Run a single test method
-docker compose exec symfony php bin/phpunit --filter testMethodName
+docker compose exec symfony php vendor/bin/phpunit --filter testMethodName
 
 # Doctrine migrations
 docker compose exec symfony php bin/console doctrine:migrations:migrate --no-interaction
