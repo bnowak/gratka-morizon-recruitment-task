@@ -38,18 +38,20 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] lepsza obsługa wyjątków w \App\Likes\LikeService
     - [ ] pozbycie się \App\Likes\LikeRepository::setUser oraz stanowego property $user, jawne użycie user w zależnych metodach jako argument
     - [ ] użycie timestampable w \App\Likes\Like::$createdAt
-    - [ ] usunać \App\Entity\Photo::$likeCounter oraz opierać "counter" na relacjach do like - mamy wtedy spójność danych niezależnie od sposobu uaktualniania counter'a, usunąć LikeService (nie będzie potrzebny)
+    - [ ] usunąć \App\Entity\Photo::$likeCounter oraz opierać "counter" na relacjach do like - mamy wtedy spójność danych niezależnie od sposobu uaktualniania counter'a, usunąć LikeService (nie będzie potrzebny)
     - [ ] czy ten user może likować to samo zjęcie wielokrotnie? - powinno być to zabezpieczone
     - [ ] ustawić firewall na akcje/endpointy publiczne i dostępne po zalogowaniu
     - [ ] użyć #[Template] atrybutów pod widoki
     - [ ] w kontrolerach wstrzykiwać bezpośrednio konkretne repozytoria zamiast poprzez EntityManager
-    - [ ] \App\Controller\ProfileController::profile pobrać id usera z sesji bezpośrendio a nie poprzez Request
+    - [ ] \App\Controller\ProfileController::profile pobrać id usera z sesji bezpośrednio a nie poprzez Request
     - [ ] stworzyć helper metodę? do pobrania zalogowanego usera w kontrolerach
     - [x] stworzyć AuthTokenRepository oraz UserRepository i wynieść zapytania SQL z \App\Controller\AuthController::login do nich, zaadresować SQJ injection
     - [ ] użyć mechanizmów Symfony do pokrycia endpointów autoryzacji z \App\Controller\AuthController
     - [ ] obsłużyć porzucone biblioteki raportowane przez composera
     - [ ] usprawnić ładowanie i zarządzanie fixturkami (\App\Command\SeedDatabaseCommand), np. użyć https://packagist.org/packages/nelmio/alice
     - [ ] przerobić \App\Command\SeedDatabaseCommand na invokable command (albo usunąć całkowicie po zaimplementowaniu powyższego)
+    - [ ] oznaczyć wszystkie routes poprawnymi metodami HTTP
+    - [ ] użyj Symfony Forms na stronie profilowej
 - [ ] Zadanie 2 - Dodaj funkcjonalność importu zdjęć do SymfonyApp z PhoenixApi
 - [ ] Zadanie 3 - Filtrowanie zdjęć na stronie głównej
 - [ ] Zadanie 4 - Zaimplementuj rate-limiting w aplikacji PhoenixApi
