@@ -32,7 +32,14 @@ class PhoenixApiClientStub implements PhoenixApiClientInterface
         }
 
         return array_map(
-            static fn (array $photo) => new PhotoEntryDto($photo['id'], $photo['photo_url']),
+            static fn (array $photo) => new PhotoEntryDto(
+                $photo['id'],
+                $photo['photo_url'],
+                $photo['camera'] ?? null,
+                $photo['location'] ?? null,
+                $photo['description'] ?? null,
+                isset($photo['taken_at']) ? new \DateTimeImmutable($photo['taken_at']) : null,
+            ),
             $this->photos,
         );
     }

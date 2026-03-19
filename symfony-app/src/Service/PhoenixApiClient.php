@@ -31,7 +31,14 @@ class PhoenixApiClient implements PhoenixApiClientInterface
              * In bigger projects it's recommended to use Symfony serializer here
              */
             return array_map(
-                static fn (array $photo) => new PhotoEntryDto($photo['id'], $photo['photo_url']),
+                static fn (array $photo) => new PhotoEntryDto(
+                    $photo['id'],
+                    $photo['photo_url'],
+                    $photo['camera'] ?? null,
+                    $photo['location'] ?? null,
+                    $photo['description'] ?? null,
+                    isset($photo['taken_at']) ? new \DateTimeImmutable($photo['taken_at']) : null,
+                ),
                 $response->toArray()['photos'] ?? [],
             );
         } catch (ExceptionInterface $e) {

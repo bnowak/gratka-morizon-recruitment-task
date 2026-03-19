@@ -10,6 +10,7 @@ use App\Likes\LikeRepository;
 use App\Likes\LikeService;
 use App\Repository\PhotoRepository;
 use App\Repository\UserRepository;
+use App\Service\Dto\PhotoEntryDto;
 use App\Service\PhoenixApiClientInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -98,10 +99,7 @@ class PhotoController extends AbstractController
             if (in_array($remote->id, $existingIds, true)) {
                 continue;
             }
-            $newPhotos[] = (new Photo())
-                ->setUser($user)
-                ->setImageUrl($remote->photoUrl)
-                ->setPhoenixPhotoId($remote->id);
+            $newPhotos[] = self::createPhoto($user, $remote);
         }
 
         $photoRepository->saveAll($newPhotos);
@@ -113,5 +111,17 @@ class PhotoController extends AbstractController
         );
 
         return $this->redirectToRoute('profile');
+    }
+
+    private static function createPhoto(User $user, PhotoEntryDto $remoteDto): Photo
+    {
+        return (new Photo())
+            ->setUser($user)
+            ->setImageUrl($remoteDto->photoUrl)
+            ->setPhoenixPhotoId($remoteDto->id)
+            ->setCamera($remoteDto->camera)
+            ->setLocation($remoteDto->location)
+            ->setDescription($remoteDto->description)
+            ->setTakenAt($remoteDto->takenAt);
     }
 }
