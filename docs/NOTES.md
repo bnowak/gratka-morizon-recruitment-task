@@ -53,6 +53,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] oznaczyć wszystkie routes poprawnymi metodami HTTP
     - [ ] użyj Symfony Forms na stronie profilowej
     - [ ] dodać logowanie istotnych akcji w aplikacji (monolog)
+    - [ ] naprawa warningów zwracanych przez testy z phoenix app
 - [x] Zadanie 2 - Dodaj funkcjonalność importu zdjęć do SymfonyApp z PhoenixApi
 - [ ] Zadanie 3 - Filtrowanie zdjęć na stronie głównej
 - [ ] Zadanie 4 - Zaimplementuj rate-limiting w aplikacji PhoenixApi
