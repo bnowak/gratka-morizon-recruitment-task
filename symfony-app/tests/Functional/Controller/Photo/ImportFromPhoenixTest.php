@@ -14,7 +14,7 @@ class ImportFromPhoenixTest extends AbstractController
 {
     public function testImportRequiresLogin(): void
     {
-        $this->client->request('POST', '/photo/import-from-phoenix');
+        $this->request('photo_import_from_phoenix');
         $this->assertResponseRedirects('/');
     }
 
@@ -22,7 +22,7 @@ class ImportFromPhoenixTest extends AbstractController
     {
         $this->logIn();
 
-        $this->client->request('POST', '/photo/import-from-phoenix');
+        $this->request('photo_import_from_phoenix');
 
         $this->assertResponseRedirects('/profile');
         $this->client->followRedirect();
@@ -42,7 +42,7 @@ class ImportFromPhoenixTest extends AbstractController
             ['id' => 2, 'photo_url' => 'https://example.com/photo2.jpg'],
         ]);
 
-        $this->client->request('POST', '/photo/import-from-phoenix');
+        $this->request('photo_import_from_phoenix');
 
         $this->assertResponseRedirects('/profile');
         $this->client->followRedirect();
@@ -69,12 +69,12 @@ class ImportFromPhoenixTest extends AbstractController
         ]);
 
         // First import
-        $this->client->request('POST', '/photo/import-from-phoenix');
+        $this->request('photo_import_from_phoenix');
         $this->assertResponseRedirects('/profile');
         $this->client->followRedirect();
 
         // Second import — same photos
-        $this->client->request('POST', '/photo/import-from-phoenix');
+        $this->request('photo_import_from_phoenix');
         $this->assertResponseRedirects('/profile');
         $this->client->followRedirect();
         $this->assertSelectorTextContains('.flash-message.success', 'No new photos to import.');
@@ -102,7 +102,7 @@ class ImportFromPhoenixTest extends AbstractController
         static::getContainer()->get(PhoenixApiClientStub::class)
             ->setThrowException(new \RuntimeException('Unauthorized', 0, $clientException));
 
-        $this->client->request('POST', '/photo/import-from-phoenix');
+        $this->request('photo_import_from_phoenix');
 
         $this->assertResponseRedirects('/profile');
         $this->client->followRedirect();
@@ -120,7 +120,7 @@ class ImportFromPhoenixTest extends AbstractController
         static::getContainer()->get(PhoenixApiClientStub::class)
             ->setThrowException(new \RuntimeException());
 
-        $this->client->request('POST', '/photo/import-from-phoenix');
+        $this->request('photo_import_from_phoenix');
 
         $this->assertResponseRedirects('/profile');
         $this->client->followRedirect();

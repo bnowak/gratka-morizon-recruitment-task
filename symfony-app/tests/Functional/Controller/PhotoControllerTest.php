@@ -14,7 +14,7 @@ class PhotoControllerTest extends AbstractController
         $user = $this->logIn();
         $photo = $this->createPhoto($user);
 
-        $this->client->request('POST', '/photo/' . $photo->getId() . '/like');
+        $this->request('photo_like', ['id' => $photo->getId()]);
 
         $this->assertResponseRedirects();
         $this->client->followRedirect();
@@ -35,7 +35,7 @@ class PhotoControllerTest extends AbstractController
         $this->em->persist($like);
         $this->em->flush();
 
-        $this->client->request('POST', '/photo/' . $photo->getId() . '/like');
+        $this->request('photo_like', ['id' => $photo->getId()]);
 
         $this->assertResponseRedirects();
         $this->client->followRedirect();

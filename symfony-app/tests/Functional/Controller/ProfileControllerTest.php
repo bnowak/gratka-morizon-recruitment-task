@@ -17,7 +17,7 @@ class ProfileControllerTest extends AbstractController
 
         $this->logIn($user);
 
-        $this->client->request('GET', '/profile');
+        $this->request('profile');
 
         $content = $this->client->getResponse()->getContent();
 
@@ -31,7 +31,7 @@ class ProfileControllerTest extends AbstractController
 
     public function testSaveTokenRequiresLogin(): void
     {
-        $this->client->request('POST', '/profile/save-token', ['phoenix_token' => 'abc']);
+        $this->request('profile_save_token', requestParams: ['phoenix_token' => 'abc']);
         $this->assertResponseRedirects('/');
     }
 
@@ -39,7 +39,7 @@ class ProfileControllerTest extends AbstractController
     {
         $this->logIn();
 
-        $this->client->request('POST', '/profile/save-token', ['phoenix_token' => 'my-secret-token']);
+        $this->request('profile_save_token', requestParams: ['phoenix_token' => 'my-secret-token']);
 
         $this->assertResponseRedirects('/profile');
         $this->client->followRedirect();
@@ -52,10 +52,10 @@ class ProfileControllerTest extends AbstractController
     {
         $this->logIn();
 
-        $this->client->request('POST', '/profile/save-token', ['phoenix_token' => 'initial-token']);
+        $this->request('profile_save_token', requestParams: ['phoenix_token' => 'initial-token']);
         $this->client->followRedirect();
 
-        $this->client->request('POST', '/profile/save-token', ['phoenix_token' => '']);
+        $this->request('profile_save_token', requestParams: ['phoenix_token' => '']);
         $this->assertResponseRedirects('/profile');
         $this->client->followRedirect();
         $this->assertSelectorTextContains('.flash-message.success', 'Phoenix API token saved successfully.');

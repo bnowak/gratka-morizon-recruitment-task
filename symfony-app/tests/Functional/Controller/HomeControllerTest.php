@@ -8,7 +8,7 @@ class HomeControllerTest extends AbstractController
 {
     public function testHomeAsGuest(): void
     {
-        $this->client->request('GET', '/');
+        $this->request('home');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorNotExists('.profile-menu');
@@ -18,7 +18,7 @@ class HomeControllerTest extends AbstractController
     {
         $this->logIn();
 
-        $this->client->request('GET', '/');
+        $this->request('home');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('.profile-menu');

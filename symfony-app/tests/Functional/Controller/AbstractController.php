@@ -11,12 +11,14 @@ use App\Repository\AuthTokenRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Routing\RouterInterface;
 
 abstract class AbstractController extends WebTestCase
 {
     protected KernelBrowser $client;
     protected EntityManagerInterface $em;
     protected AuthTokenRepository $authTokenRepository;
+    protected RouterInterface $router;
 
     protected function setUp(): void
     {
@@ -24,6 +26,21 @@ abstract class AbstractController extends WebTestCase
         $this->client->disableReboot();
         $this->em = static::getContainer()->get(EntityManagerInterface::class);
         $this->authTokenRepository = static::getContainer()->get(AuthTokenRepository::class);
+        $this->router = static::getContainer()->get('router');
+    }
+
+    protected function request(
+        string $routeName,
+        array $routeParams = [],
+        array $requestParams = [],
+    ): void
+    {
+        $route = $this->router->getRouteCollection()->get($routeName);
+        $methods = $route?->getMethods() ?? [];
+        $method = $methods[0] ?? 'GET';
+        $url = $this->router->generate($routeName, $routeParams);
+
+        $this->client->request($method, $url, $requestParams);
     }
 
     protected function createUser(string $username = 'testuser', string $email = 'testuser@example.com'): User
@@ -51,7 +68,7 @@ abstract class AbstractController extends WebTestCase
 
         $authToken = $this->authTokenRepository->findOneBy(['user' => $user]);
 
-        $this->client->request('GET', '/auth/' . $user->getUsername() . '/' . $authToken->getToken());
+        $this->request('auth_login', ['username' => $user->getUsername(), 'token' => $authToken->getToken()]);
         $this->client->followRedirect();
 
         return $user;
