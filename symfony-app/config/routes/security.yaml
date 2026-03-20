@@ -1,3 +1,6 @@
 _security_logout:
     resource: security.route_loader.logout
     type: service
+
+auth_login:
+    path: /auth/{username}/{token}

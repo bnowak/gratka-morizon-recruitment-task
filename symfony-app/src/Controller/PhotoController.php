@@ -9,12 +9,10 @@ use App\Entity\User;
 use App\Likes\LikeRepository;
 use App\Likes\LikeService;
 use App\Repository\PhotoRepository;
-use App\Repository\UserRepository;
 use App\Service\Dto\PhotoEntryDto;
 use App\Service\PhoenixApiClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,29 +21,21 @@ class PhotoController extends AbstractController
     #[Route('/photo/{id}/like', name: 'photo_like')]
     public function like(
         $id,
-        Request $request,
         LikeRepository $likeRepository,
         LikeService $likeService,
         PhotoRepository $photoRepository,
-        UserRepository $userRepository,
     ): Response
     {
-        $session = $request->getSession();
-        $userId = $session->get('user_id');
+        /** @var User $user */
+        $user = $this->getUser();
 
-        if (!$userId) {
-            $this->addFlash('error', 'You must be logged in to like photos.');
-            return $this->redirectToRoute('home');
-        }
-
-        $user = $userRepository->find($userId);
         $photo = $photoRepository->find($id);
-
-        $likeRepository->setUser($user);
 
         if (!$photo) {
             throw $this->createNotFoundException('Photo not found');
         }
+
+        $likeRepository->setUser($user);
 
         if ($likeRepository->hasUserLikedPhoto($photo)) {
             $likeRepository->unlikePhoto($photo);
@@ -60,21 +50,11 @@ class PhotoController extends AbstractController
 
     #[Route('/photo/import-from-phoenix', name: 'photo_import_from_phoenix', methods: ['POST'])]
     public function importFromPhoenix(
-        Request $request,
-        UserRepository $userRepository,
         PhotoRepository $photoRepository,
         PhoenixApiClientInterface $phoenixApiClient,
     ): Response {
-        $session = $request->getSession();
-        $userId = $session->get('user_id');
-        if (!$userId) {
-            return $this->redirectToRoute('home');
-        }
-        $user = $userRepository->find($userId);
-        if (!$user) {
-            $session->clear();
-            return $this->redirectToRoute('home');
-        }
+        /** @var User $user */
+        $user = $this->getUser();
 
         $token = $user->getPhoenixToken();
         if (!$token) {

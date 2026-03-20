@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\PhotoFiltersType;
 use App\Likes\LikeRepository;
 use App\Repository\PhotoRepository;
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +20,7 @@ class HomeController extends AbstractController
      * @Route("/", name="home")
      * @return JsonResponse
      */
-    public function index(Request $request, PhotoRepository $photoRepository, LikeRepository $likeRepository, UserRepository $userRepository): Response
+    public function index(Request $request, PhotoRepository $photoRepository, LikeRepository $likeRepository): Response
     {
         $form = $this->createForm(PhotoFiltersType::class);
         $form->handleRequest($request);
@@ -28,19 +28,14 @@ class HomeController extends AbstractController
         $filters = $form->isSubmitted() && $form->isValid() ? $form->getData() : null;
         $photos = $photoRepository->findAllWithUsers($filters);
 
-        $session = $request->getSession();
-        $userId = $session->get('user_id');
-        $currentUser = null;
+        /** @var User|null $currentUser */
+        $currentUser = $this->getUser();
         $userLikes = [];
 
-        if ($userId) {
-            $currentUser = $userRepository->find($userId);
-
-            if ($currentUser) {
-                foreach ($photos as $photo) {
-                    $likeRepository->setUser($currentUser);
-                    $userLikes[$photo->getId()] = $likeRepository->hasUserLikedPhoto($photo);
-                }
+        if ($currentUser instanceof User) {
+            foreach ($photos as $photo) {
+                $likeRepository->setUser($currentUser);
+                $userLikes[$photo->getId()] = $likeRepository->hasUserLikedPhoto($photo);
             }
         }
 

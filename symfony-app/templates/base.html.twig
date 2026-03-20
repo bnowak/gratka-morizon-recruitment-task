@@ -183,7 +183,7 @@
         </div>
     {% endfor %}
     
-    {% if app.session.get('user_id') %}
+    {% if app.user %}
         <div class="profile-menu">
             <a href="{{ path('profile') }}" class="profile-icon" title="My Profile">
                 👤
@@ -191,7 +191,7 @@
             <div class="profile-dropdown">
                 <a href="{{ path('profile') }}">👤 My Profile</a>
                 <div class="profile-dropdown-separator"></div>
-                <a href="{{ path('logout') }}">🚪 Logout</a>
+                <a href="{{ path('_logout_main') }}">🚪 Logout</a>
             </div>
         </div>
     {% endif %}
