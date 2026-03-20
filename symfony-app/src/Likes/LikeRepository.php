@@ -73,6 +73,17 @@ final class LikeRepository extends ServiceEntityRepository implements LikeReposi
     }
 
     #[\Override]
+    public function getLikedPhotoIds(User $user): array
+    {
+        return $this->createQueryBuilder('l')
+            ->select('IDENTITY(l.photo) AS photo_id')
+            ->where('l.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
+    #[\Override]
     public function updatePhotoCounter(Photo $photo, int $increment): void
     {
         $em = $this->getEntityManager();

@@ -27,19 +27,16 @@ class HomeController extends AbstractController
 
         /** @var User|null $currentUser */
         $currentUser = $this->getUser();
-        $userLikes = [];
 
-        if ($currentUser instanceof User) {
-            foreach ($photos as $photo) {
-                $userLikes[$photo->getId()] = $likeRepository->hasUserLikedPhoto($photo, $currentUser);
-            }
-        }
+        $likedPhotoIds = ($currentUser instanceof User)
+            ? $likeRepository->getLikedPhotoIds($currentUser)
+            : [];
 
         return [
             'photos' => $photos,
             'filterForm' => $form->createView(),
             'currentUser' => $currentUser,
-            'userLikes' => $userLikes,
+            'likedPhotoIds' => $likedPhotoIds,
         ];
     }
 }

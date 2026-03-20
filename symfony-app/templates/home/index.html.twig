@@ -263,8 +263,8 @@
                         <img src="{{ photo.imageUrl }}" alt="{{ photo.description }}">
                         {% if currentUser %}
                             <form method="post" action="{{ path('photo_like', {id: photo.id}) }}" style="display:contents">
-                                <button type="submit" class="like-button {{ userLikes[photo.id] ? 'liked' : '' }}">
-                                    {{ userLikes[photo.id] ? '❤️' : '🤍' }}
+                                <button type="submit" class="like-button {{ photo.id in likedPhotoIds ? 'liked' : '' }}">
+                                    {{ photo.id in likedPhotoIds ? '❤️' : '🤍' }}
                                     <span>{{ photo.likeCounter }}</span>
                                 </button>
                             </form>
