@@ -39,10 +39,10 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] pozbycie się \App\Likes\LikeRepository::setUser oraz stanowego property $user, jawne użycie user w zależnych metodach jako argument
     - [ ] użycie timestampable w \App\Likes\Like::$createdAt
     - [ ] usunąć \App\Entity\Photo::$likeCounter oraz opierać "counter" na relacjach do like - mamy wtedy spójność danych niezależnie od sposobu uaktualniania counter'a, usunąć LikeService (nie będzie potrzebny)
-    - [ ] czy ten user może likować to samo zjęcie wielokrotnie? - powinno być to zabezpieczone
+    - [ ] czy ten user może likować to samo zdjęcie wielokrotnie? - powinno być to zabezpieczone
     - [ ] ustawić firewall na akcje/endpointy publiczne i dostępne po zalogowaniu
     - [ ] użyć #[Template] atrybutów pod widoki
-    - [ ] w kontrolerach wstrzykiwać bezpośrednio konkretne repozytoria zamiast poprzez EntityManager
+    - [x] w kontrolerach wstrzykiwać bezpośrednio konkretne repozytoria zamiast poprzez EntityManager
     - [ ] \App\Controller\ProfileController::profile pobrać id usera z sesji bezpośrednio a nie poprzez Request
     - [ ] stworzyć helper metodę? do pobrania zalogowanego usera w kontrolerach
     - [x] stworzyć AuthTokenRepository oraz UserRepository i wynieść zapytania SQL z \App\Controller\AuthController::login do nich, zaadresować SQJ injection
@@ -52,6 +52,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] przerobić \App\Command\SeedDatabaseCommand na invokable command (albo usunąć całkowicie po zaimplementowaniu powyższego)
     - [ ] oznaczyć wszystkie routes poprawnymi metodami HTTP
     - [ ] użyj Symfony Forms na stronie profilowej
+    - [ ] można być użyć Doctrine Param Convertera do pobierania od razu encji w argumentach akcji kontrolerów
     - [ ] dodać logowanie istotnych akcji w aplikacji (monolog)
     - [ ] naprawa warningów zwracanych przez testy z phoenix app
 - [x] Zadanie 2 - Dodaj funkcjonalność importu zdjęć do SymfonyApp z PhoenixApi

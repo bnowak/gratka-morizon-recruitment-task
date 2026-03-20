@@ -12,8 +12,6 @@ use App\Repository\PhotoRepository;
 use App\Repository\UserRepository;
 use App\Service\Dto\PhotoEntryDto;
 use App\Service\PhoenixApiClientInterface;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,11 +21,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class PhotoController extends AbstractController
 {
     #[Route('/photo/{id}/like', name: 'photo_like')]
-    public function like($id, Request $request, EntityManagerInterface $em, ManagerRegistry $managerRegistry): Response
+    public function like(
+        $id,
+        Request $request,
+        LikeRepository $likeRepository,
+        LikeService $likeService,
+        PhotoRepository $photoRepository,
+        UserRepository $userRepository,
+    ): Response
     {
-        $likeRepository = new LikeRepository($managerRegistry);
-        $likeService = new LikeService($likeRepository);
-
         $session = $request->getSession();
         $userId = $session->get('user_id');
 
@@ -36,8 +38,8 @@ class PhotoController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $user = $em->getRepository(User::class)->find($userId);
-        $photo = $em->getRepository(Photo::class)->find($id);
+        $user = $userRepository->find($userId);
+        $photo = $photoRepository->find($id);
 
         $likeRepository->setUser($user);
 
