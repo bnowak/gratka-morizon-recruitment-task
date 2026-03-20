@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use App\Entity\Photo;
 use App\Entity\User;
-use App\Likes\LikeRepository;
 use App\Likes\LikeService;
 use App\Repository\PhotoRepository;
 use App\Service\Dto\PhotoEntryDto;
@@ -22,7 +21,6 @@ class PhotoController extends AbstractController
     #[Route('/photo/{id}/like', name: 'photo_like', methods: ['POST'], requirements: ['id' => Requirement::DIGITS])]
     public function like(
         int $id,
-        LikeRepository $likeRepository,
         LikeService $likeService,
         PhotoRepository $photoRepository,
     ): Response
@@ -36,11 +34,11 @@ class PhotoController extends AbstractController
             throw $this->createNotFoundException('Photo not found');
         }
 
-        if ($likeRepository->hasUserLikedPhoto($photo, $user)) {
-            $likeRepository->unlikePhoto($photo, $user);
+        if ($likeService->hasUserLikedPhoto($photo, $user)) {
+            $likeService->unlike($photo, $user);
             $this->addFlash('info', 'Photo unliked!');
         } else {
-            $likeService->execute($photo, $user);
+            $likeService->like($photo, $user);
             $this->addFlash('success', 'Photo liked!');
         }
 

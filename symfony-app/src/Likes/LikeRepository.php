@@ -17,7 +17,7 @@ final class LikeRepository extends ServiceEntityRepository implements LikeReposi
     }
 
     #[\Override]
-    public function unlikePhoto(Photo $photo, User $user): void
+    public function removeLike(Photo $photo, User $user): void
     {
         $em = $this->getEntityManager();
 
@@ -34,13 +34,20 @@ final class LikeRepository extends ServiceEntityRepository implements LikeReposi
 
         if ($like) {
             $em->remove($like);
-            $em->flush();
-
-            $photo->setLikeCounter($photo->getLikeCounter() - 1);
-            $em->persist($photo);
-
-            $em->flush();
         }
+    }
+
+    #[\Override]
+    public function createLike(Photo $photo, User $user): Like
+    {
+        $like = new Like();
+        $like->setUser($user);
+        $like->setPhoto($photo);
+
+        $em = $this->getEntityManager();
+        $em->persist($like);
+
+        return $like;
     }
 
     #[\Override]
@@ -56,20 +63,6 @@ final class LikeRepository extends ServiceEntityRepository implements LikeReposi
             ->getArrayResult();
 
         return count($likes) > 0;
-    }
-
-    #[\Override]
-    public function createLike(Photo $photo, User $user): Like
-    {
-        $like = new Like();
-        $like->setUser($user);
-        $like->setPhoto($photo);
-
-        $em = $this->getEntityManager();
-        $em->persist($like);
-        $em->flush();
-
-        return $like;
     }
 
     #[\Override]
@@ -89,6 +82,5 @@ final class LikeRepository extends ServiceEntityRepository implements LikeReposi
         $em = $this->getEntityManager();
         $photo->setLikeCounter($photo->getLikeCounter() + $increment);
         $em->persist($photo);
-        $em->flush();
     }
 }

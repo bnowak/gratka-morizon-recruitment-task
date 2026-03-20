@@ -6,20 +6,33 @@ namespace App\Likes;
 
 use App\Entity\Photo;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 
 class LikeService
 {
     public function __construct(
-        private LikeRepositoryInterface $likeRepository
+        private LikeRepositoryInterface $likeRepository,
+        private EntityManagerInterface $em,
     ) {}
 
-    public function execute(Photo $photo, User $user): void
+    public function like(Photo $photo, User $user): void
     {
-        try {
+        $this->em->wrapInTransaction(function () use ($photo, $user): void {
             $this->likeRepository->createLike($photo, $user);
             $this->likeRepository->updatePhotoCounter($photo, 1);
-        } catch (\Throwable $e) {
-            throw new \Exception('Something went wrong while liking the photo');
-        }
+        });
+    }
+
+    public function unlike(Photo $photo, User $user): void
+    {
+        $this->em->wrapInTransaction(function () use ($photo, $user): void {
+            $this->likeRepository->removeLike($photo, $user);
+            $this->likeRepository->updatePhotoCounter($photo, -1);
+        });
+    }
+
+    public function hasUserLikedPhoto(Photo $photo, User $user): bool
+    {
+        return $this->likeRepository->hasUserLikedPhoto($photo, $user);
     }
 }

@@ -8,12 +8,15 @@ use App\Entity\User;
 
 interface LikeRepositoryInterface
 {
-    public function unlikePhoto(Photo $photo, User $user): void;
+    /** Does not flush. */
+    public function removeLike(Photo $photo, User $user): void;
 
     public function hasUserLikedPhoto(Photo $photo, User $user): bool;
 
+    /** Does not flush. */
     public function createLike(Photo $photo, User $user): Like;
 
+    /** Does not flush. */
     public function updatePhotoCounter(Photo $photo, int $increment): void;
 
     /** @return int[] */

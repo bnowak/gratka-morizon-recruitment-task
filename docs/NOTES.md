@@ -42,9 +42,18 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [x] pozbycie się \App\Likes\LikeRepository::setUser oraz stanowego property $user, jawne użycie user w zależnych
       metodach jako argument
     - [ ] użycie timestampable w \App\Likes\Like::$createdAt
-    - [ ] usunąć \App\Entity\Photo::$likeCounter oraz opierać "counter" na relacjach do like - mamy wtedy spójność
-      danych niezależnie od sposobu uaktualniania counter'a, usunąć LikeService (nie będzie potrzebny)
-    - [ ] czy ten user może likować to samo zdjęcie wielokrotnie? - powinno być to zabezpieczone
+    - [x] brak transakcyjności (w kontekści countera like'ów) w akcji polubiania/odlubiania zdjęcia przez usera.  
+      Tutaj dodam że do samego countera można by podejść inaczej:
+      - usunąć go całkowicie, i opierać się na ilość relacji pomiędzy encjami Like <-> Photo.
+        Mamy wtedy spójność danych zapewnioną przez bazę danych (zawsze prawidłowy stan).
+        Dla poprawy wydajności, aby doctrine nie czytał każdorazowo kolekcji like'ów z poziomu encji Photo możemy użyć https://www.doctrine-project.org/projects/doctrine-orm/en/3.6/tutorials/extra-lazy-associations.html
+        Dzięki temu wołając `count` na kolekcji like'ów (obiektowo poprzez endję), doctrine wywoła pod spodem jednorazowo `SELECT COUNT(*)` bez wczytywania całej kolekcji danych. 
+        Jest to podejście z znormalizowaną bazą danych (brak dublowania informacji w róznych tabelkach).
+      - innym podejściem mogłoby być pozostawienie countera w bazie, natomiast użycia Doctrine events.
+        W reakcji na operację dodania/usunięcia Like doctrine samoczynnie by aktualizował counter.
+        Zabezpieczyłoby nas to prze ew. wywołaniem metod `removeLike`/`createLike` z LikeRepository (z pominięciem domenowego LikeService).
+        Na minus jest fakt, że jest to bardziej techniczne rozwiązanie i "ukryta" logika biznesowa bardziej na warstwie infrastruktury.
+        Jest to podejście ze denormalizowaną bazą danych (duble w bazie z przeznaczeniem pod performance odczytu, brak join'ów).
     - [x] ustawić firewall na akcje/endpointy publiczne i dostępne po zalogowaniu
     - [x] użyć #[Template] atrybutów pod widoki
     - [x] w kontrolerach wstrzykiwać bezpośrednio konkretne repozytoria zamiast poprzez EntityManager
