@@ -65,6 +65,12 @@
     ],
     "post-update-cmd": [
       "@auto-scripts"
+    ],
+    "phpcs": "vendor/bin/phpcs",
+    "test": "vendor/bin/phpunit",
+    "pre-commit": [
+      "@phpcs",
+      "@test"
     ]
   },
   "extra": {

@@ -35,7 +35,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] sprawdzić walidacje schematu bazy
     - [ ] aktualizacja Symfony do 8.0
     - [ ] aktualizacja zależności do nowszych wersji
-    - [ ] dodanie php code sniffer
+    - [x] dodanie php code sniffer (base coding standards)
     - [ ] dodanie phpstan
     - [ ] dodanie deptrac dla trackowania zależności pomiędzy komponentami
     - [x] lepsza obsługa wyjątków w \App\Likes\LikeService

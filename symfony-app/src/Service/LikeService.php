@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Service;
 
@@ -14,7 +14,8 @@ class LikeService
     public function __construct(
         private LikeRepository $likeRepository,
         private EntityManagerInterface $em,
-    ) {}
+    ) {
+    }
 
     public function like(Photo $photo, User $user): void
     {

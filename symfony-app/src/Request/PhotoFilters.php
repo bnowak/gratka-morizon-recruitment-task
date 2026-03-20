@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Request;
 
@@ -13,5 +13,6 @@ final class PhotoFilters
         public ?string $username = null,
         public ?\DateTimeImmutable $takenAtFrom = null,
         public ?\DateTimeImmutable $takenAtTo = null,
-    ) {}
+    ) {
+    }
 }

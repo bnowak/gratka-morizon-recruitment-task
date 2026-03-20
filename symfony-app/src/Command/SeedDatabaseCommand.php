@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Command;
 
@@ -217,7 +217,12 @@ class SeedDatabaseCommand extends Command
         $this->entityManager->flush();
 
         $io->success('Database seeded successfully!');
-        $io->info(sprintf('Created %d users, %d auth tokens, and %d photos', count($usersData), count($usersData), count($photosData)));
+        $io->info(sprintf(
+            'Created %d users, %d auth tokens, and %d photos',
+            count($usersData),
+            count($usersData),
+            count($photosData),
+        ));
 
         return Command::SUCCESS;
     }

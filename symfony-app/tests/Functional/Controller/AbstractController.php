@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Tests\Functional\Controller;
 
@@ -33,8 +33,7 @@ abstract class AbstractController extends WebTestCase
         string $routeName,
         array $routeParams = [],
         array $requestParams = [],
-    ): void
-    {
+    ): void {
         $route = $this->router->getRouteCollection()->get($routeName);
         $methods = $route?->getMethods() ?? [];
         $method = $methods[0] ?? 'GET';

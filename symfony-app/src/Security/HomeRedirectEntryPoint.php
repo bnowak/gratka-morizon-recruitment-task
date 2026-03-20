@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Security;
 
@@ -12,7 +12,9 @@ use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface
 
 class HomeRedirectEntryPoint implements AuthenticationEntryPointInterface
 {
-    public function __construct(private RouterInterface $router) {}
+    public function __construct(private RouterInterface $router)
+    {
+    }
 
     public function start(Request $request, ?AuthenticationException $authException = null): RedirectResponse
     {

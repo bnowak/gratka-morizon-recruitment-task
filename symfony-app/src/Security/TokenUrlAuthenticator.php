@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Security;
 
@@ -24,7 +24,8 @@ class TokenUrlAuthenticator extends AbstractAuthenticator
         private AuthTokenRepository $authTokenRepository,
         private UserRepository $userRepository,
         private RouterInterface $router,
-    ) {}
+    ) {
+    }
 
     public function supports(Request $request): ?bool
     {

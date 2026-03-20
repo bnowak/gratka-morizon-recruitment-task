@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Controller;
 
@@ -25,8 +25,7 @@ class PhotoController extends AbstractController
         int $id,
         LikeService $likeService,
         PhotoRepository $photoRepository,
-    ): Response
-    {
+    ): Response {
         /** @var User $user */
         $user = $this->getUser();
 
@@ -92,8 +91,7 @@ class PhotoController extends AbstractController
 
         $this->addFlash('success', $count > 0
             ? "Imported {$count} new photo(s) from Phoenix."
-            : 'No new photos to import.'
-        );
+            : 'No new photos to import.');
 
         return $this->redirectToRoute('profile');
     }

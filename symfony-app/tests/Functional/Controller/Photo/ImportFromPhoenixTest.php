@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Tests\Functional\Controller\Photo;
 
@@ -27,7 +27,10 @@ class ImportFromPhoenixTest extends AbstractController
 
         $this->assertResponseRedirects('/profile');
         $this->client->followRedirect();
-        $this->assertSelectorTextContains('.flash-message.warning', 'No Phoenix API token set. Please save your token first.');
+        $this->assertSelectorTextContains(
+            '.flash-message.warning',
+            'No Phoenix API token set. Please save your token first.',
+        );
     }
 
     public function testImportCreatesNewPhotos(): void
@@ -99,7 +102,10 @@ class ImportFromPhoenixTest extends AbstractController
 
         $this->assertResponseRedirects('/profile');
         $this->client->followRedirect();
-        $this->assertSelectorTextContains('.flash-message.error', 'Unauthorized API token. Save correct user token and try again.');
+        $this->assertSelectorTextContains(
+            '.flash-message.error',
+            'Unauthorized API token. Save correct user token and try again.',
+        );
     }
 
     public function testImportWithRequestsLimitReachedShowsError(): void
@@ -117,7 +123,10 @@ class ImportFromPhoenixTest extends AbstractController
 
         $this->assertResponseRedirects('/profile');
         $this->client->followRedirect();
-        $this->assertSelectorTextContains('.flash-message.error', 'Too many import requests. Please try again later.');
+        $this->assertSelectorTextContains(
+            '.flash-message.error',
+            'Too many import requests. Please try again later.',
+        );
     }
 
     public function testImportHandlesPhoenixApiError(): void
@@ -135,6 +144,9 @@ class ImportFromPhoenixTest extends AbstractController
 
         $this->assertResponseRedirects('/profile');
         $this->client->followRedirect();
-        $this->assertSelectorTextContains('.flash-message.error', 'Could not connect to Phoenix API. Please try again later.');
+        $this->assertSelectorTextContains(
+            '.flash-message.error',
+            'Could not connect to Phoenix API. Please try again later.',
+        );
     }
 }

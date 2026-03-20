@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Service\PhoenixService\Dto;
 
 final class PhotoEntryDto
@@ -11,7 +13,6 @@ final class PhotoEntryDto
         public readonly ?string $location,
         public readonly ?string $description,
         public readonly ?\DateTimeImmutable $takenAt,
-    )
-    {
+    ) {
     }
 }

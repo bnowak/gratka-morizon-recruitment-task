@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 use App\Kernel;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
-require_once dirname(__DIR__).'/vendor/autoload.php';
-require dirname(__DIR__).'/config/bootstrap.php';
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+require dirname(__DIR__) . '/config/bootstrap.php';
 
 $env = $_SERVER['APP_ENV'] ?? 'dev';
 $debug = (bool) ($_SERVER['APP_DEBUG'] ?? ('prod' !== $env));

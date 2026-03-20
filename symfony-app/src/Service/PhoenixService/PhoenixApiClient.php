@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Service\PhoenixService;
 
@@ -51,7 +51,10 @@ class PhoenixApiClient implements PhoenixApiClientInterface
             throw match ($statusCode) {
                 401 => new PhoenixUnauthorizedException('Phoenix API returned 401 Unauthorized', previous: $e),
                 429 => new PhoenixRateLimitException('Phoenix API returned 429 Too Many Requests', previous: $e),
-                default => new PhoenixApiException('Phoenix API returned unexpected HTTP error: ' . $statusCode, previous: $e),
+                default => new PhoenixApiException(
+                    'Phoenix API returned unexpected HTTP error: ' . $statusCode,
+                    previous: $e,
+                ),
             };
         } catch (ExceptionInterface $e) {
             throw new PhoenixApiException('Failed to connect to Phoenix API: ' . $e->getMessage(), previous: $e);
