@@ -9,9 +9,11 @@ use App\Entity\User;
 use App\Repository\PhotoRepository;
 use App\Service\LikeService;
 use App\Service\PhoenixService\Dto\PhotoEntryDto;
+use App\Service\PhoenixService\Exception\PhoenixApiException;
+use App\Service\PhoenixService\Exception\PhoenixRateLimitException;
+use App\Service\PhoenixService\Exception\PhoenixUnauthorizedException;
 use App\Service\PhoenixService\PhoenixApiClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
@@ -65,14 +67,14 @@ class PhotoController extends AbstractController
 
         try {
             $remotePhotos = $phoenixApiClient->fetchPhotos($token);
-        } catch (\RuntimeException $e) {
-            $previousException = $e->getPrevious();
-            if ($previousException instanceof ClientException && $previousException->getCode() === 401) {
-                $this->addFlash('error', 'Unauthorized API token. Save correct user token and try again.');
-            } else {
-                $this->addFlash('error', 'Could not connect to Phoenix API. Please try again later.');
-            }
+        } catch (PhoenixApiException $e) {
+            $errorMessage = match ($e::class) {
+                PhoenixUnauthorizedException::class => 'Unauthorized API token. Save correct user token and try again.',
+                PhoenixRateLimitException::class => 'Too many import requests. Please try again later.',
+                default => 'Could not connect to Phoenix API. Please try again later.',
+            };
 
+            $this->addFlash('error', $errorMessage);
             return $this->redirectToRoute('profile');
         }
 

@@ -81,7 +81,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [x] dodać .editorconfig
 - [x] Zadanie 2 - Dodaj funkcjonalność importu zdjęć do SymfonyApp z PhoenixApi
 - [x] Zadanie 3 - Filtrowanie zdjęć na stronie głównej
-- [ ] Zadanie 4 - Zaimplementuj rate-limiting w aplikacji PhoenixApi  
+- [x] Zadanie 4 - Zaimplementuj rate-limiting w aplikacji PhoenixApi  
   (*) Przy tym zadaniu z racji że dawno nie programowałem w Elixir i obecnie mało co pamiętam, nie będę ukrywał że
   posłużyłem się vibe coding.
   Zleciłem zadanie agentowi wraz z napisaniem testów. Następnie po sprawdzeniu i wyjaśnieniu przez niego wszystkich

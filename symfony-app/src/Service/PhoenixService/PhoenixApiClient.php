@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace App\Service\PhoenixService;
 
 use App\Service\PhoenixService\Dto\PhotoEntryDto;
+use App\Service\PhoenixService\Exception\PhoenixApiException;
+use App\Service\PhoenixService\Exception\PhoenixRateLimitException;
+use App\Service\PhoenixService\Exception\PhoenixUnauthorizedException;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class PhoenixApiClient implements PhoenixApiClientInterface
@@ -41,8 +45,16 @@ class PhoenixApiClient implements PhoenixApiClientInterface
                 ),
                 $response->toArray()['photos'] ?? [],
             );
+        } catch (HttpExceptionInterface $e) {
+            $statusCode = $e->getResponse()->getStatusCode();
+
+            throw match ($statusCode) {
+                401 => new PhoenixUnauthorizedException('Phoenix API returned 401 Unauthorized', previous: $e),
+                429 => new PhoenixRateLimitException('Phoenix API returned 429 Too Many Requests', previous: $e),
+                default => new PhoenixApiException('Phoenix API returned unexpected HTTP error: ' . $statusCode, previous: $e),
+            };
         } catch (ExceptionInterface $e) {
-            throw new \RuntimeException('Failed to fetch photos from Phoenix API', previous: $e);
+            throw new PhoenixApiException('Failed to connect to Phoenix API: ' . $e->getMessage(), previous: $e);
         }
     }
 }
