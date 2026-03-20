@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Controller\Photo;
 
 use App\Repository\PhotoRepository;
+use App\Service\PhoenixService\Exception\PhoenixApiException;
+use App\Service\PhoenixService\Exception\PhoenixRateLimitException;
+use App\Service\PhoenixService\Exception\PhoenixUnauthorizedException;
 use App\Tests\Functional\Controller\AbstractController;
 use App\Tests\TestDoubles\PhoenixApiClientStub;
-use Symfony\Component\HttpClient\Exception\ClientException;
-use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class ImportFromPhoenixTest extends AbstractController
 {
@@ -91,22 +92,32 @@ class ImportFromPhoenixTest extends AbstractController
 
         $this->logIn($user);
 
-        $response = $this->createMock(ResponseInterface::class);
-        $response->method('getInfo')->willReturnMap([
-            ['http_code', 401],
-            ['url', 'http://phoenix/api/photos'],
-            ['response_headers', []],
-        ]);
-        $clientException = new ClientException($response);
-
         static::getContainer()->get(PhoenixApiClientStub::class)
-            ->setThrowException(new \RuntimeException('Unauthorized', 0, $clientException));
+            ->setThrowException(new PhoenixUnauthorizedException());
 
         $this->request('photo_import_from_phoenix');
 
         $this->assertResponseRedirects('/profile');
         $this->client->followRedirect();
         $this->assertSelectorTextContains('.flash-message.error', 'Unauthorized API token. Save correct user token and try again.');
+    }
+
+    public function testImportWithRequestsLimitReachedShowsError(): void
+    {
+        $user = $this->createUser('unauthorized', 'unauthorized@example.com');
+        $user->setPhoenixToken('wrong-token');
+        $this->em->flush();
+
+        $this->logIn($user);
+
+        static::getContainer()->get(PhoenixApiClientStub::class)
+            ->setThrowException(new PhoenixRateLimitException());
+
+        $this->request('photo_import_from_phoenix');
+
+        $this->assertResponseRedirects('/profile');
+        $this->client->followRedirect();
+        $this->assertSelectorTextContains('.flash-message.error', 'Too many import requests. Please try again later.');
     }
 
     public function testImportHandlesPhoenixApiError(): void
@@ -118,7 +129,7 @@ class ImportFromPhoenixTest extends AbstractController
         $this->logIn($user);
 
         static::getContainer()->get(PhoenixApiClientStub::class)
-            ->setThrowException(new \RuntimeException());
+            ->setThrowException(new PhoenixApiException());
 
         $this->request('photo_import_from_phoenix');
 
