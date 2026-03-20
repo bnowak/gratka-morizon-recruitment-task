@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -56,7 +57,9 @@ class TokenUrlAuthenticator extends AbstractAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         $username = $token->getUser()->getUserIdentifier();
-        $request->getSession()->getFlashBag()->add('success', 'Welcome back, ' . $username . '!');
+        $session = $request->getSession();
+        assert($session instanceof FlashBagAwareSessionInterface);
+        $session->getFlashBag()->add('success', 'Welcome back, ' . $username . '!');
 
         return new RedirectResponse($this->router->generate('home'));
     }

@@ -36,7 +36,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] aktualizacja Symfony do 8.0
     - [ ] aktualizacja zależności do nowszych wersji
     - [x] dodanie php code sniffer (base coding standards)
-    - [ ] dodanie phpstan
+    - [x] dodanie phpstan (domyślny level 6, gdybym miał więcej czasu to atakowałbym poziom 10 :))
     - [ ] dodanie deptrac dla trackowania zależności pomiędzy komponentami
     - [x] lepsza obsługa wyjątków w \App\Likes\LikeService
     - [x] pozbycie się \App\Likes\LikeRepository::setUser oraz stanowego property $user, jawne użycie user w zależnych

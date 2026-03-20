@@ -17,7 +17,7 @@ class User implements UserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private ?int $id = null;
+    private ?int $id = null; // @phpstan-ignore property.unusedType
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private string $username;
@@ -40,6 +40,7 @@ class User implements UserInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $phoenixToken = null;
 
+    /** @var Collection<int, Photo> */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Photo::class, cascade: ['persist', 'remove'])]
     private Collection $photos;
 

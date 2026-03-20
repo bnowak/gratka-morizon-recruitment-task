@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController
 {
+    /** @return array<string, mixed> */
     #[Route('/profile', name: 'profile', methods: ['GET'])]
     #[Template('profile/index.html.twig')]
     public function profile(): array

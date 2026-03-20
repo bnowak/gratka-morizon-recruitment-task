@@ -9,12 +9,13 @@ use App\Entity\User;
 use App\Repository\LikeRepository;
 use App\Service\LikeService;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class LikeServiceTest extends TestCase
 {
-    private LikeRepository $likeRepository;
-    private EntityManagerInterface $em;
+    private LikeRepository&MockObject $likeRepository;
+    private EntityManagerInterface&MockObject $em;
     private LikeService $likeService;
 
     protected function setUp(): void

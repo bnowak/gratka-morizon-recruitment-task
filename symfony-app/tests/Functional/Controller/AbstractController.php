@@ -29,6 +29,10 @@ abstract class AbstractController extends WebTestCase
         $this->router = static::getContainer()->get('router');
     }
 
+    /**
+     * @param array<string, mixed> $routeParams
+     * @param array<string, mixed> $requestParams
+     */
     protected function request(
         string $routeName,
         array $routeParams = [],

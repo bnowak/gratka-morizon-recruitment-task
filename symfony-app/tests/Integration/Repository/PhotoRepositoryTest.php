@@ -124,6 +124,9 @@ class PhotoRepositoryTest extends KernelTestCase
         ];
     }
 
+    /**
+     * @param list<string> $expectedKeys
+     */
     #[DataProvider('findAllWithUsersProvider')]
     public function testFindAllWithUsers(?PhotoFilters $filters, array $expectedKeys): void
     {

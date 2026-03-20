@@ -10,6 +10,7 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/** @extends ServiceEntityRepository<Like> */
 class LikeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -17,11 +18,9 @@ class LikeRepository extends ServiceEntityRepository
         parent::__construct($registry, Like::class);
     }
 
-    #[\Override]
     public function removeLike(Photo $photo, User $user): void
     {
         $em = $this->getEntityManager();
-
         $like = $em->createQueryBuilder()
             ->select('l')
             ->from(Like::class, 'l')
@@ -32,26 +31,21 @@ class LikeRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
-
         if ($like) {
             $em->remove($like);
         }
     }
 
-    #[\Override]
     public function createLike(Photo $photo, User $user): Like
     {
         $like = new Like();
         $like->setUser($user);
         $like->setPhoto($photo);
-
         $em = $this->getEntityManager();
         $em->persist($like);
-
         return $like;
     }
 
-    #[\Override]
     public function hasUserLikedPhoto(Photo $photo, User $user): bool
     {
         $likes = $this->createQueryBuilder('l')
@@ -62,11 +56,10 @@ class LikeRepository extends ServiceEntityRepository
             ->setParameter('photo', $photo)
             ->getQuery()
             ->getArrayResult();
-
         return count($likes) > 0;
     }
 
-    #[\Override]
+    /** @return list<int> */
     public function getLikedPhotoIds(User $user): array
     {
         return $this->createQueryBuilder('l')
@@ -77,7 +70,6 @@ class LikeRepository extends ServiceEntityRepository
             ->getSingleColumnResult();
     }
 
-    #[\Override]
     public function updatePhotoCounter(Photo $photo, int $increment): void
     {
         $em = $this->getEntityManager();

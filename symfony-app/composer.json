@@ -68,9 +68,11 @@
       "@auto-scripts"
     ],
     "phpcs": "vendor/bin/phpcs",
+    "phpstan": "vendor/bin/phpstan --memory-limit=512M",
     "test": "vendor/bin/phpunit",
     "pre-commit": [
       "@phpcs",
+      "@phpstan",
       "@test"
     ]
   },

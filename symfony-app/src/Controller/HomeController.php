@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+    /** @return array<string, mixed> */
     #[Route('/', name: 'home', methods: ['GET'])]
     #[Template('home/index.html.twig')]
     public function index(Request $request, PhotoRepository $photoRepository, LikeRepository $likeRepository): array
