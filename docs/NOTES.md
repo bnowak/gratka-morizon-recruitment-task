@@ -55,6 +55,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] można być użyć Doctrine Param Convertera do pobierania od razu encji w argumentach akcji kontrolerów
     - [ ] dodać logowanie istotnych akcji w aplikacji (monolog)
     - [ ] naprawa warningów zwracanych przez testy z phoenix app
+    - [ ] optymalizacja zapytania db w homepage
 - [x] Zadanie 2 - Dodaj funkcjonalność importu zdjęć do SymfonyApp z PhoenixApi
 - [x] Zadanie 3 - Filtrowanie zdjęć na stronie głównej
 - [ ] Zadanie 4 - Zaimplementuj rate-limiting w aplikacji PhoenixApi
