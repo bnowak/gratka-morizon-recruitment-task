@@ -29,7 +29,8 @@
     "symfony/browser-kit": "*",
     "symfony/css-selector": "*",
     "symfony/maker-bundle": "^1.53",
-    "symfony/phpunit-bridge": "^8.0"
+    "symfony/phpunit-bridge": "^8.0",
+    "symfony/web-profiler-bundle": "*"
   },
   "autoload": {
     "psr-4": {
