@@ -79,6 +79,8 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] naprawa warningów zwracanych przez testy z phoenix app
     - [x] optymalizacja zapytania db w homepage (n+1 issue)
     - [x] dodać .editorconfig
+    - [ ] brakuje paginacji na stronie ze zdjęciami. Przy większej ilości danych strona ładowała by się bardzo powoli
+      oraz byłby słaby UX.
 - [x] Zadanie 2 - Dodaj funkcjonalność importu zdjęć do SymfonyApp z PhoenixApi
 - [x] Zadanie 3 - Filtrowanie zdjęć na stronie głównej
 - [x] Zadanie 4 - Zaimplementuj rate-limiting w aplikacji PhoenixApi  
