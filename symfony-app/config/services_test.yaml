@@ -1,6 +1,0 @@
-services:
-    App\Tests\TestDoubles\PhoenixApiClientStub:
-        public: true
-
-    App\Service\PhoenixApiClientInterface:
-        alias: App\Tests\TestDoubles\PhoenixApiClientStub

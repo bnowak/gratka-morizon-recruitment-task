@@ -14,3 +14,11 @@ services:
     App\Service\PhoenixApiClient:
         arguments:
             $phoenixBaseUrl: '%env(PHOENIX_BASE_URL)%'
+
+when@test:
+    services:
+        App\Tests\TestDoubles\PhoenixApiClientStub:
+            public: true
+
+        App\Service\PhoenixApiClientInterface:
+            alias: App\Tests\TestDoubles\PhoenixApiClientStub
