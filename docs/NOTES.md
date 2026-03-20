@@ -38,7 +38,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] dodanie php code sniffer
     - [ ] dodanie phpstan
     - [ ] dodanie deptrac dla trackowania zależności pomiędzy komponentami
-    - [ ] lepsza obsługa wyjątków w \App\Likes\LikeService
+    - [x] lepsza obsługa wyjątków w \App\Likes\LikeService
     - [x] pozbycie się \App\Likes\LikeRepository::setUser oraz stanowego property $user, jawne użycie user w zależnych
       metodach jako argument
     - [ ] użycie timestampable w \App\Likes\Like::$createdAt

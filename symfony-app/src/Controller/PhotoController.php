@@ -34,12 +34,16 @@ class PhotoController extends AbstractController
             throw $this->createNotFoundException('Photo not found');
         }
 
-        if ($likeService->hasUserLikedPhoto($photo, $user)) {
-            $likeService->unlike($photo, $user);
-            $this->addFlash('info', 'Photo unliked!');
-        } else {
-            $likeService->like($photo, $user);
-            $this->addFlash('success', 'Photo liked!');
+        try {
+            if ($likeService->hasUserLikedPhoto($photo, $user)) {
+                $likeService->unlike($photo, $user);
+                $this->addFlash('info', 'Photo unliked!');
+            } else {
+                $likeService->like($photo, $user);
+                $this->addFlash('success', 'Photo liked!');
+            }
+        } catch (\RuntimeException $e) {
+            $this->addFlash('error', sprintf('%s Please try again.', $e->getMessage()));
         }
 
         return $this->redirectToRoute('home');
