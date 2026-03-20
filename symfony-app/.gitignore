@@ -18,3 +18,7 @@ node_modules/
 /phpunit.xml
 /.phpunit.cache/
 ###< phpunit/phpunit ###
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+###< squizlabs/php_codesniffer ###
