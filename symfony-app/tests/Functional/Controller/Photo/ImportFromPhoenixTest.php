@@ -8,6 +8,7 @@ use App\Repository\PhotoRepository;
 use App\Service\PhoenixService\Exception\PhoenixApiException;
 use App\Service\PhoenixService\Exception\PhoenixRateLimitException;
 use App\Service\PhoenixService\Exception\PhoenixUnauthorizedException;
+use App\Service\PhoenixService\Dto\PhotoEntryDto;
 use App\Tests\Functional\Controller\AbstractController;
 use App\Tests\TestDoubles\PhoenixApiClientStub;
 
@@ -42,8 +43,8 @@ class ImportFromPhoenixTest extends AbstractController
         $this->logIn($user);
 
         static::getContainer()->get(PhoenixApiClientStub::class)->setPhotos([
-            ['id' => 1, 'photo_url' => 'https://example.com/photo1.jpg'],
-            ['id' => 2, 'photo_url' => 'https://example.com/photo2.jpg'],
+            new PhotoEntryDto(1, 'https://example.com/photo1.jpg', null, null, null, null),
+            new PhotoEntryDto(2, 'https://example.com/photo2.jpg', null, null, null, null),
         ]);
 
         $this->request('photo_import_from_phoenix');
@@ -68,8 +69,8 @@ class ImportFromPhoenixTest extends AbstractController
         $this->logIn($user);
 
         static::getContainer()->get(PhoenixApiClientStub::class)->setPhotos([
-            ['id' => 10, 'photo_url' => 'https://example.com/photo10.jpg'],
-            ['id' => 11, 'photo_url' => 'https://example.com/photo11.jpg'],
+            new PhotoEntryDto(10, 'https://example.com/photo10.jpg', null, null, null, null),
+            new PhotoEntryDto(11, 'https://example.com/photo11.jpg', null, null, null, null),
         ]);
 
         // First import

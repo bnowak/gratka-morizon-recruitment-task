@@ -9,12 +9,12 @@ use App\Service\PhoenixService\PhoenixApiClientInterface;
 
 class PhoenixApiClientStub implements PhoenixApiClientInterface
 {
-    /** @var array<array{id: int, photo_url: string}> */
+    /** @var list<PhotoEntryDto> */
     private array $photos = [];
 
     private ?\RuntimeException $exception = null;
 
-    /** @param array<array{id: int, photo_url: string}> $photos */
+    /** @param list<PhotoEntryDto> $photos */
     public function setPhotos(array $photos): void
     {
         $this->photos = $photos;
@@ -31,16 +31,6 @@ class PhoenixApiClientStub implements PhoenixApiClientInterface
             throw $this->exception;
         }
 
-        return array_map(
-            static fn (array $photo) => new PhotoEntryDto(
-                $photo['id'],
-                $photo['photo_url'],
-                $photo['camera'] ?? null,
-                $photo['location'] ?? null,
-                $photo['description'] ?? null,
-                isset($photo['taken_at']) ? new \DateTimeImmutable($photo['taken_at']) : null,
-            ),
-            $this->photos,
-        );
+        return $this->photos;
     }
 }
