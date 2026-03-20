@@ -74,7 +74,6 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] naprawa warningów zwracanych przez testy z phoenix app
     - [x] optymalizacja zapytania db w homepage (n+1 issue)
     - [x] dodać .editorconfig
-    - [ ] użycie join w repozytoriach gdzie ich brakuje (np. 2 razy where)
 - [x] Zadanie 2 - Dodaj funkcjonalność importu zdjęć do SymfonyApp z PhoenixApi
 - [x] Zadanie 3 - Filtrowanie zdjęć na stronie głównej
 - [ ] Zadanie 4 - Zaimplementuj rate-limiting w aplikacji PhoenixApi

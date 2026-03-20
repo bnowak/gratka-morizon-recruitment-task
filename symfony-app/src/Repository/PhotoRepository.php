@@ -59,16 +59,13 @@ class PhotoRepository extends ServiceEntityRepository
     /** @return int[] */
     public function findExistingPhoenixPhotoIds(User $user): array
     {
-        return array_column(
-            $this->createQueryBuilder('p')
-                ->select('p.phoenixPhotoId')
-                ->where('p.user = :user')
-                ->andWhere('p.phoenixPhotoId IS NOT NULL')
-                ->setParameter('user', $user)
-                ->getQuery()
-                ->getArrayResult(),
-            'phoenixPhotoId'
-        );
+        return $this->createQueryBuilder('p')
+            ->select('p.phoenixPhotoId')
+            ->where('p.user = :user')
+            ->andWhere('p.phoenixPhotoId IS NOT NULL')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getSingleColumnResult();
     }
 
     /** @param Photo[] $photos */
