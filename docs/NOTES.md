@@ -23,7 +23,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
 
 - [x] funkcjonalne
 - [x] integracyjne
-- [ ] jednostkowe
+- [x] jednostkowe
 
 ## Zadania
 
