@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller;
 
+use App\Entity\Like;
 use App\Entity\User;
-use App\Likes\Like;
 
 class PhotoControllerTest extends AbstractController
 {

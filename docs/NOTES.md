@@ -15,7 +15,7 @@ zauważyłem pewne elementy biznesowe jak:
 
 Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overengineering" :P.
 
-- [ ] niespójne podejście z Like component (wydzielony osobno) a reszta encji/repo wydzielona bardziej technicznie
+- [x] niespójne podejście z Like component (wydzielony osobno) a reszta encji/repo wydzielona bardziej technicznie
 - [ ] nie powinniśmy przekazywać do widoków bezpośrednio modeli z bazy. Albo przekazujemy wartości skalarne, albo
   tworzymy obiekty DTO jako warstwa pośrednia
 

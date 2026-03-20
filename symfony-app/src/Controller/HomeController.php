@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\PhotoFiltersType;
-use App\Likes\LikeRepository;
+use App\Repository\LikeRepository;
 use App\Repository\PhotoRepository;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

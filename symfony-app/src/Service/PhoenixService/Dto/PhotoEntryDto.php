@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Dto;
+namespace App\Service\PhoenixService\Dto;
 
 final class PhotoEntryDto
 {

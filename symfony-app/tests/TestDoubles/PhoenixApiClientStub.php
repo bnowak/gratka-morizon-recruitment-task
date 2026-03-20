@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\TestDoubles;
 
-use App\Service\Dto\PhotoEntryDto;
-use App\Service\PhoenixApiClientInterface;
+use App\Service\PhoenixService\Dto\PhotoEntryDto;
+use App\Service\PhoenixService\PhoenixApiClientInterface;
 
 class PhoenixApiClientStub implements PhoenixApiClientInterface
 {

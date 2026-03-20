@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Likes;
+namespace App\Service;
 
 use App\Entity\Photo;
 use App\Entity\User;
+use App\Repository\LikeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class LikeService
 {
     public function __construct(
-        private LikeRepositoryInterface $likeRepository,
+        private LikeRepository $likeRepository,
         private EntityManagerInterface $em,
     ) {}
 

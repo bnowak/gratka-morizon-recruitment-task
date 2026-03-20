@@ -6,10 +6,10 @@ namespace App\Controller;
 
 use App\Entity\Photo;
 use App\Entity\User;
-use App\Likes\LikeService;
 use App\Repository\PhotoRepository;
-use App\Service\Dto\PhotoEntryDto;
-use App\Service\PhoenixApiClientInterface;
+use App\Service\LikeService;
+use App\Service\PhoenixService\Dto\PhotoEntryDto;
+use App\Service\PhoenixService\PhoenixApiClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Service\PhoenixService;
 
-use App\Service\Dto\PhotoEntryDto;
+use App\Service\PhoenixService\Dto\PhotoEntryDto;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
