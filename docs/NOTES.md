@@ -5,16 +5,19 @@
 ## Architektura
 
 Jest to dosyć mały prosty/projekt z użyciem architektury MVC.  
-Mając na uwadze ograniczony czas oraz ilość poprawek/zadań do wykonania pozostanę przy tej architekturze. 
+Mając na uwadze ograniczony czas oraz ilość poprawek/zadań do wykonania pozostanę przy tej architekturze.
 Natomiast miejscami jest ona niespójna, co postaram się usprawnić oraz zwiększyć powtarzalność rozwiązań.
-Mając więcej czasu pokusiłbym się o skorzystanie z architektury hexagonalnej (oraz być może warstwy z domeną), gdyż zauważyłem pewne elementy biznesowe jak:
- - dane i zależności: zdjęcia, polubienia, użytkownik
- - logikę/akcje: polub/"odlub" :P zdjęcie, import zdjęć
+Mając więcej czasu pokusiłbym się o skorzystanie z architektury hexagonalnej (oraz być może warstwy z domeną), gdyż
+zauważyłem pewne elementy biznesowe jak:
+
+- dane i zależności: zdjęcia, polubienia, użytkownik
+- logikę/akcje: polub/"odlub" :P zdjęcie, import zdjęć
 
 Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overengineering" :P.
 
 - [ ] niespójne podejście z Like component (wydzielony osobno) a reszta encji/repo wydzielona bardziej technicznie
-- [ ] nie powinniśmy przekazywać do widoków bezpośrednio modeli z bazy. Albo przekazujemy wartości skalarne, albo tworzymy obiekty DTO jako warstwa pośrednia
+- [ ] nie powinniśmy przekazywać do widoków bezpośrednio modeli z bazy. Albo przekazujemy wartości skalarne, albo
+  tworzymy obiekty DTO jako warstwa pośrednia
 
 ## Testy
 
@@ -36,37 +39,49 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] dodanie phpstan
     - [ ] dodanie deptrac dla trackowania zależności pomiędzy komponentami
     - [ ] lepsza obsługa wyjątków w \App\Likes\LikeService
-    - [x] pozbycie się \App\Likes\LikeRepository::setUser oraz stanowego property $user, jawne użycie user w zależnych metodach jako argument
+    - [x] pozbycie się \App\Likes\LikeRepository::setUser oraz stanowego property $user, jawne użycie user w zależnych
+      metodach jako argument
     - [ ] użycie timestampable w \App\Likes\Like::$createdAt
-    - [ ] usunąć \App\Entity\Photo::$likeCounter oraz opierać "counter" na relacjach do like - mamy wtedy spójność danych niezależnie od sposobu uaktualniania counter'a, usunąć LikeService (nie będzie potrzebny)
+    - [ ] usunąć \App\Entity\Photo::$likeCounter oraz opierać "counter" na relacjach do like - mamy wtedy spójność
+      danych niezależnie od sposobu uaktualniania counter'a, usunąć LikeService (nie będzie potrzebny)
     - [ ] czy ten user może likować to samo zdjęcie wielokrotnie? - powinno być to zabezpieczone
     - [x] ustawić firewall na akcje/endpointy publiczne i dostępne po zalogowaniu
     - [x] użyć #[Template] atrybutów pod widoki
     - [x] w kontrolerach wstrzykiwać bezpośrednio konkretne repozytoria zamiast poprzez EntityManager
     - [x] \App\Controller\ProfileController::profile pobrać id usera z sesji bezpośrednio a nie poprzez Request
     - [x] stworzyć helper metodę? do pobrania zalogowanego usera w kontrolerach => użyłem wbudowanej w symfony
-    - [x] stworzyć AuthTokenRepository oraz UserRepository i wynieść zapytania SQL z \App\Controller\AuthController::login do nich, zaadresować SQJ injection
+    - [x] stworzyć AuthTokenRepository oraz UserRepository i wynieść zapytania SQL z \App\Controller\AuthController::
+      login do nich, zaadresować SQJ injection
     - [x] użyć mechanizmów Symfony do pokrycia endpointów autoryzacji z \App\Controller\AuthController
     - [ ] obsłużyć porzucone biblioteki raportowane przez composera
-    - [ ] usprawnić ładowanie i zarządzanie fixturkami (\App\Command\SeedDatabaseCommand), np. użyć https://packagist.org/packages/nelmio/alice
-    - [ ] przerobić \App\Command\SeedDatabaseCommand na invokable command (albo usunąć całkowicie po zaimplementowaniu powyższego)
+    - [ ] usprawnić ładowanie i zarządzanie fixturkami (\App\Command\SeedDatabaseCommand), np.
+      użyć https://packagist.org/packages/nelmio/alice
+    - [ ] przerobić \App\Command\SeedDatabaseCommand na invokable command (albo usunąć całkowicie po zaimplementowaniu
+      powyższego)
     - [x] oznaczyć wszystkie routes poprawnymi metodami HTTP
     - [ ] użyj Symfony Forms na stronie profilowej
     - [ ] można być użyć Doctrine Param Convertera do pobierania od razu encji w argumentach akcji kontrolerów
     - [ ] dodać logowanie istotnych akcji w aplikacji (monolog)
     - [ ] naprawa warningów zwracanych przez testy z phoenix app
     - [ ] optymalizacja zapytania db w homepage
+    - [x] dodać .editorconfig
 - [x] Zadanie 2 - Dodaj funkcjonalność importu zdjęć do SymfonyApp z PhoenixApi
 - [x] Zadanie 3 - Filtrowanie zdjęć na stronie głównej
 - [ ] Zadanie 4 - Zaimplementuj rate-limiting w aplikacji PhoenixApi
 
 ## Opis użycia AI
 
-Używam AI (claude code) w iteracyjny sposób rozwiązując każde zadanie/problem indywidualnie (czyszcząc poprzednio context agenta).  
-Staram się używać podejścia SDD (nie vibe coding), mając pełną kontrolę nad oczekiwanym rezultatem, jak również każdorazowo sprawdzając wygenerowane przez AI zmiany.  
-Na początku każdego zadania/kroku używam "planning mode" aby zbudować kontekst agenta dla danego zadania oraz po iteracyjnym poprawianiu planu (kiedy uznam że jest on wystarczająco dobry i uwzględnia wszystkie wymagania), przechodzę do jego implementacji przez agenta.  
-Staram się zawsze dostarczyć mu możliwie najbardziej konkretne wymagania i (swój) oczekiwany wynik, bez pola na domysły.
-Również korzystam z jego rad i dyskutuję na ich temat w elementach gdzie coś można zaimplementować na kilka różnych sposobów, aby wybrać najlepsze rozwiązanie. 
+Używam AI (claude code) w iteracyjny sposób rozwiązując każde zadanie/problem indywidualnie (czyszcząc poprzednio
+context agenta).  
+Staram się używać podejścia SDD (nie vibe coding), mając pełną kontrolę nad oczekiwanym rezultatem, jak również
+każdorazowo sprawdzając wygenerowane przez AI zmiany.  
+Na początku każdego zadania/kroku używam "planning mode" aby zbudować kontekst agenta dla danego zadania oraz po
+iteracyjnym poprawianiu planu (kiedy uznam że jest on wystarczająco dobry i uwzględnia wszystkie wymagania), przechodzę
+do jego implementacji przez agenta.  
+Staram się zawsze dostarczyć mu możliwie najbardziej konkretne wymagania i (swój) oczekiwany wynik, bez pola na
+domysły.  
+Również korzystam z jego rad i dyskutuję na ich temat w elementach gdzie coś można zaimplementować na kilka różnych
+sposobów, aby wybrać najlepsze rozwiązanie.  
 Po zaimplementowaniu kodu i jego przeglądzie, ew. dokonuje drobnych poprawek.
 Następnie ręcznie commituje zmiany.  
 Na końcu, używam jeszcze AI do szerszej analizy kodu/projektu co mógłbym jeszcze usprawnić, a o czym sam nie pomyślałem.
