@@ -41,7 +41,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] usunąć \App\Entity\Photo::$likeCounter oraz opierać "counter" na relacjach do like - mamy wtedy spójność danych niezależnie od sposobu uaktualniania counter'a, usunąć LikeService (nie będzie potrzebny)
     - [ ] czy ten user może likować to samo zdjęcie wielokrotnie? - powinno być to zabezpieczone
     - [x] ustawić firewall na akcje/endpointy publiczne i dostępne po zalogowaniu
-    - [ ] użyć #[Template] atrybutów pod widoki
+    - [x] użyć #[Template] atrybutów pod widoki
     - [x] w kontrolerach wstrzykiwać bezpośrednio konkretne repozytoria zamiast poprzez EntityManager
     - [x] \App\Controller\ProfileController::profile pobrać id usera z sesji bezpośrednio a nie poprzez Request
     - [x] stworzyć helper metodę? do pobrania zalogowanego usera w kontrolerach => użyłem wbudowanej w symfony

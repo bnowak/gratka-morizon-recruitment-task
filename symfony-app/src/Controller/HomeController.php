@@ -8,19 +8,18 @@ use App\Entity\User;
 use App\Form\PhotoFiltersType;
 use App\Likes\LikeRepository;
 use App\Repository\PhotoRepository;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
-     * @return JsonResponse
      */
-    public function index(Request $request, PhotoRepository $photoRepository, LikeRepository $likeRepository): Response
+    #[Template('home/index.html.twig')]
+    public function index(Request $request, PhotoRepository $photoRepository, LikeRepository $likeRepository): array
     {
         $form = $this->createForm(PhotoFiltersType::class);
         $form->handleRequest($request);
@@ -38,11 +37,11 @@ class HomeController extends AbstractController
             }
         }
 
-        return $this->render('home/index.html.twig', [
+        return [
             'photos' => $photos,
             'filterForm' => $form->createView(),
             'currentUser' => $currentUser,
             'userLikes' => $userLikes,
-        ]);
+        ];
     }
 }

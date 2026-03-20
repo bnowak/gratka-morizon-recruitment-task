@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,11 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'profile')]
-    public function profile(): Response
+    #[Template('profile/index.html.twig')]
+    public function profile(): array
     {
-        return $this->render('profile/index.html.twig', [
+        return [
             'user' => $this->getUser(),
-        ]);
+        ];
     }
 
     #[Route('/profile/save-token', name: 'profile_save_token', methods: ['POST'])]
