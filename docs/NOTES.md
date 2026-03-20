@@ -59,13 +59,9 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
 - [x] Zadanie 3 - Filtrowanie zdjęć na stronie głównej
 - [ ] Zadanie 4 - Zaimplementuj rate-limiting w aplikacji PhoenixApi
 
-## Co jeszcze bym usprawnił mając więcej czasu
-
-- Wszystkie niezaadresowane tutaj punkty
-
 ## Opis użycia AI
 
-Po początkowym review projektu i spisaniu tego dokumentu, używam AI (claude code) w iteracyjny sposób rozwiązując każde zadanie/problem indywidualnie (czyszcząc poprzednio context agenta).  
+Używam AI (claude code) w iteracyjny sposób rozwiązując każde zadanie/problem indywidualnie (czyszcząc poprzednio context agenta).  
 Staram się używać podejścia SDD (nie vibe coding), mając pełną kontrolę nad oczekiwanym rezultatem, jak również każdorazowo sprawdzając wygenerowane przez AI zmiany.  
 Na początku każdego zadania/kroku używam "planning mode" aby zbudować kontekst agenta dla danego zadania oraz po iteracyjnym poprawianiu planu (kiedy uznam że jest on wystarczająco dobry i uwzględnia wszystkie wymagania), przechodzę do jego implementacji przez agenta.  
 Staram się zawsze dostarczyć mu możliwie najbardziej konkretne wymagania i (swój) oczekiwany wynik, bez pola na domysły.
@@ -73,3 +69,9 @@ Również korzystam z jego rad i dyskutuję na ich temat w elementach gdzie coś
 Po zaimplementowaniu kodu i jego przeglądzie, ew. dokonuje drobnych poprawek.
 Następnie ręcznie commituje zmiany.  
 Na końcu, używam jeszcze AI do szerszej analizy kodu/projektu co mógłbym jeszcze usprawnić, a o czym sam nie pomyślałem.
+
+## Podsumowanie / rzeczy ogólne
+
+Na początku zrobiłem review projektu i spisałem ten dokument jako plan na wykonanie zadania/zadań.  
+Zaznaczę że dawno nie robiłem projektu w MVC, więć ma pewno znalazły by się tutaj rzeczy do poprawy.  
+Gdybym miał jeszcze więcej czasu, na pewno zaadresowałbym wszystkie spisane a niedokończone punkty z tego dokumentu.
