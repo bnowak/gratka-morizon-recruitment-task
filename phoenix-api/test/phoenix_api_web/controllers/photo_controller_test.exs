@@ -135,4 +135,40 @@ defmodule PhoenixApiWeb.PhotoControllerTest do
       assert Enum.at(response["photos"], 0)["photo_url"] == "https://example.com/photo3.jpg"
     end
   end
+
+  describe "rate limiting" do
+    test "returns 429 after per-user limit is exceeded", %{conn: conn} do
+      for _ <- 1..3 do
+        conn
+        |> put_req_header("access-token", "valid_test_token_123")
+        |> get("/api/photos")
+      end
+
+      conn =
+        conn
+        |> put_req_header("access-token", "valid_test_token_123")
+        |> get("/api/photos")
+
+      assert json_response(conn, 429) == %{"errors" => %{"detail" => "Too Many Requests"}}
+    end
+
+    test "different users have independent per-user limits", %{conn: conn} do
+      for _ <- 1..3 do
+        conn
+        |> put_req_header("access-token", "valid_test_token_123")
+        |> get("/api/photos")
+      end
+
+      %PhoenixApi.Accounts.User{}
+      |> PhoenixApi.Accounts.User.changeset(%{api_token: "user2_token"})
+      |> PhoenixApi.Repo.insert!()
+
+      conn2 =
+        conn
+        |> put_req_header("access-token", "user2_token")
+        |> get("/api/photos")
+
+      assert json_response(conn2, 200)
+    end
+  end
 end

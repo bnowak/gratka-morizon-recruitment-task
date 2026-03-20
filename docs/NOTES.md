@@ -44,16 +44,21 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] użycie timestampable w \App\Likes\Like::$createdAt
     - [x] brak transakcyjności (w kontekści countera like'ów) w akcji polubiania/odlubiania zdjęcia przez usera.  
       Tutaj dodam że do samego countera można by podejść inaczej:
-      - usunąć go całkowicie, i opierać się na ilość relacji pomiędzy encjami Like <-> Photo.
-        Mamy wtedy spójność danych zapewnioną przez bazę danych (zawsze prawidłowy stan).
-        Dla poprawy wydajności, aby doctrine nie czytał każdorazowo kolekcji like'ów z poziomu encji Photo możemy użyć https://www.doctrine-project.org/projects/doctrine-orm/en/3.6/tutorials/extra-lazy-associations.html
-        Dzięki temu wołając `count` na kolekcji like'ów (obiektowo poprzez endję), doctrine wywoła pod spodem jednorazowo `SELECT COUNT(*)` bez wczytywania całej kolekcji danych. 
-        Jest to podejście z znormalizowaną bazą danych (brak dublowania informacji w róznych tabelkach).
-      - innym podejściem mogłoby być pozostawienie countera w bazie, natomiast użycia Doctrine events.
-        W reakcji na operację dodania/usunięcia Like doctrine samoczynnie by aktualizował counter.
-        Zabezpieczyłoby nas to prze ew. wywołaniem metod `removeLike`/`createLike` z LikeRepository (z pominięciem domenowego LikeService).
-        Na minus jest fakt, że jest to bardziej techniczne rozwiązanie i "ukryta" logika biznesowa bardziej na warstwie infrastruktury.
-        Jest to podejście ze denormalizowaną bazą danych (duble w bazie z przeznaczeniem pod performance odczytu, brak join'ów).
+        - usunąć go całkowicie, i opierać się na ilość relacji pomiędzy encjami Like <-> Photo.
+          Mamy wtedy spójność danych zapewnioną przez bazę danych (zawsze prawidłowy stan).
+          Dla poprawy wydajności, aby doctrine nie czytał każdorazowo kolekcji like'ów z poziomu encji Photo możemy
+          użyć https://www.doctrine-project.org/projects/doctrine-orm/en/3.6/tutorials/extra-lazy-associations.html
+          Dzięki temu wołając `count` na kolekcji like'ów (obiektowo poprzez endję), doctrine wywoła pod spodem
+          jednorazowo `SELECT COUNT(*)` bez wczytywania całej kolekcji danych.
+          Jest to podejście z znormalizowaną bazą danych (brak dublowania informacji w róznych tabelkach).
+        - innym podejściem mogłoby być pozostawienie countera w bazie, natomiast użycia Doctrine events.
+          W reakcji na operację dodania/usunięcia Like doctrine samoczynnie by aktualizował counter.
+          Zabezpieczyłoby nas to prze ew. wywołaniem metod `removeLike`/`createLike` z LikeRepository (z pominięciem
+          domenowego LikeService).
+          Na minus jest fakt, że jest to bardziej techniczne rozwiązanie i "ukryta" logika biznesowa bardziej na
+          warstwie infrastruktury.
+          Jest to podejście ze denormalizowaną bazą danych (duble w bazie z przeznaczeniem pod performance odczytu, brak
+          join'ów).
     - [x] ustawić firewall na akcje/endpointy publiczne i dostępne po zalogowaniu
     - [x] użyć #[Template] atrybutów pod widoki
     - [x] w kontrolerach wstrzykiwać bezpośrednio konkretne repozytoria zamiast poprzez EntityManager
@@ -76,14 +81,28 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [x] dodać .editorconfig
 - [x] Zadanie 2 - Dodaj funkcjonalność importu zdjęć do SymfonyApp z PhoenixApi
 - [x] Zadanie 3 - Filtrowanie zdjęć na stronie głównej
-- [ ] Zadanie 4 - Zaimplementuj rate-limiting w aplikacji PhoenixApi
+- [ ] Zadanie 4 - Zaimplementuj rate-limiting w aplikacji PhoenixApi  
+  (*) Przy tym zadaniu z racji że dawno nie programowałem w Elixir i obecnie mało co pamiętam, nie będę ukrywał że
+  posłużyłem się vibe coding.
+  Zleciłem zadanie agentowi wraz z napisaniem testów. Następnie po sprawdzeniu i wyjaśnieniu przez niego wszystkich
+  aspektów zleciłem implementację.
+  Dla uproszczenia założyłem sztywne okno czasowe, tj. stan GenServera nie trzyma timestampów każdego requestu
+  userów (chociaż tak powinno być to zaimplementowane), ale tworzy poszczególne "okna" czasowe zgodnie z wymaganiami
+  gdzie pamięta globalną ilość requestów w danym "oknie" oraz dedykowaną dla danego każdego użytkownika osobno
+  (jego "lokalny" limit).
+  Dla uproszczenia stan "okien" czasowych trzymam w pamięci in-memory, więc są czyszczone przy każdym restarcie
+  appki / GenServer.
+  Docelowo powinniśmy czyścić stare "okna", np. odpalając cykliczne akcje po zakończeniu danego "okna" i czyszcząc
+  wszystkie poprzednie dane z pamięci.
+  Produkcyjnie, moglibyśmy (raczej powinniśmy) również zapisywać dane w jakimś zewnętrznym storage aby nie tracić
+  aktualnego stanu podczas każdorazowego deploy'u aplikacji.
 
 ## Opis użycia AI
 
 Używam AI (claude code) w iteracyjny sposób rozwiązując każde zadanie/problem indywidualnie (czyszcząc poprzednio
 context agenta).  
-Staram się używać podejścia SDD (nie vibe coding), mając pełną kontrolę nad oczekiwanym rezultatem, jak również
-każdorazowo sprawdzając wygenerowane przez AI zmiany.  
+Staram się używać podejścia SDD (nie vibe coding - *tutaj wyjątek odnośnie zadania nr 4, opis przy zadaniu),
+mając pełną kontrolę nad oczekiwanym rezultatem, jak również każdorazowo sprawdzając wygenerowane przez AI zmiany.  
 Na początku każdego zadania/kroku używam "planning mode" aby zbudować kontekst agenta dla danego zadania oraz po
 iteracyjnym poprawianiu planu (kiedy uznam że jest on wystarczająco dobry i uwzględnia wszystkie wymagania), przechodzę
 do jego implementacji przez agenta.  

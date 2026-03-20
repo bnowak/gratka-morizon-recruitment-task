@@ -14,3 +14,9 @@ config :phoenix_api, PhoenixApiWeb.Endpoint,
   server: false
 
 config :logger, level: :warn
+
+config :phoenix_api, :rate_limiter,
+  per_user_limit: 3,
+  user_window_ms: 60_000,
+  global_limit: 10,
+  global_window_ms: 60_000

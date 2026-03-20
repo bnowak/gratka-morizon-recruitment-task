@@ -6,8 +6,9 @@ defmodule PhoenixApi.Application do
     children = [
       PhoenixApi.Repo,
       {Phoenix.PubSub, name: PhoenixApi.PubSub},
-      PhoenixApiWeb.Endpoint,
-      {Finch, name: PhoenixApiFinch}
+      {Finch, name: PhoenixApiFinch},
+      PhoenixApi.RateLimiter,
+      PhoenixApiWeb.Endpoint
     ]
 
     opts = [strategy: :one_for_one, name: PhoenixApi.Supervisor]

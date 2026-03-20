@@ -16,6 +16,7 @@ defmodule PhoenixApiWeb.ConnCase do
   end
 
   setup tags do
+    PhoenixApi.RateLimiter.reset()
     pid = Ecto.Adapters.SQL.Sandbox.start_owner!(PhoenixApi.Repo, shared: not tags[:async])
     on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
