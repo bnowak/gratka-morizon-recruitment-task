@@ -33,7 +33,7 @@ abstract class AbstractController extends WebTestCase
             ->setEmail($email);
 
         $authToken = (new AuthToken())
-            ->setToken('test-token-' . uniqid())
+            ->setToken(bin2hex(random_bytes(16)))
             ->setUser($user);
 
         $this->em->persist($user);

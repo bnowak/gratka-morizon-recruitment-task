@@ -50,7 +50,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] obsłużyć porzucone biblioteki raportowane przez composera
     - [ ] usprawnić ładowanie i zarządzanie fixturkami (\App\Command\SeedDatabaseCommand), np. użyć https://packagist.org/packages/nelmio/alice
     - [ ] przerobić \App\Command\SeedDatabaseCommand na invokable command (albo usunąć całkowicie po zaimplementowaniu powyższego)
-    - [ ] oznaczyć wszystkie routes poprawnymi metodami HTTP
+    - [x] oznaczyć wszystkie routes poprawnymi metodami HTTP
     - [ ] użyj Symfony Forms na stronie profilowej
     - [ ] można być użyć Doctrine Param Convertera do pobierania od razu encji w argumentach akcji kontrolerów
     - [ ] dodać logowanie istotnych akcji w aplikacji (monolog)

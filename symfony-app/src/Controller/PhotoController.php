@@ -15,12 +15,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
 
 class PhotoController extends AbstractController
 {
-    #[Route('/photo/{id}/like', name: 'photo_like')]
+    #[Route('/photo/{id}/like', name: 'photo_like', methods: ['POST'], requirements: ['id' => Requirement::DIGITS])]
     public function like(
-        $id,
+        int $id,
         LikeRepository $likeRepository,
         LikeService $likeService,
         PhotoRepository $photoRepository,

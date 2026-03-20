@@ -4,3 +4,7 @@ _security_logout:
 
 auth_login:
     path: /auth/{username}/{token}
+    methods: [GET]
+    requirements:
+        username: '[a-zA-Z0-9_]+'
+        token: '[a-f0-9]+'

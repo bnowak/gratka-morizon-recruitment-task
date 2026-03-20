@@ -262,10 +262,12 @@
                     <div class="photo-image-container">
                         <img src="{{ photo.imageUrl }}" alt="{{ photo.description }}">
                         {% if currentUser %}
-                            <a href="{{ path('photo_like', {id: photo.id}) }}" class="like-button {{ userLikes[photo.id] ? 'liked' : '' }}">
-                                {{ userLikes[photo.id] ? '❤️' : '🤍' }}
-                                <span>{{ photo.likeCounter }}</span>
-                            </a>
+                            <form method="post" action="{{ path('photo_like', {id: photo.id}) }}" style="display:contents">
+                                <button type="submit" class="like-button {{ userLikes[photo.id] ? 'liked' : '' }}">
+                                    {{ userLikes[photo.id] ? '❤️' : '🤍' }}
+                                    <span>{{ photo.likeCounter }}</span>
+                                </button>
+                            </form>
                         {% else %}
                             <span class="like-button disabled" title="Login to like">
                                 🤍
