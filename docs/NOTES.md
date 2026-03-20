@@ -36,7 +36,7 @@ Natomiast zdaję sobię sprawę że dla projektu tej skali jest to lekki "overen
     - [ ] dodanie phpstan
     - [ ] dodanie deptrac dla trackowania zależności pomiędzy komponentami
     - [ ] lepsza obsługa wyjątków w \App\Likes\LikeService
-    - [ ] pozbycie się \App\Likes\LikeRepository::setUser oraz stanowego property $user, jawne użycie user w zależnych metodach jako argument
+    - [x] pozbycie się \App\Likes\LikeRepository::setUser oraz stanowego property $user, jawne użycie user w zależnych metodach jako argument
     - [ ] użycie timestampable w \App\Likes\Like::$createdAt
     - [ ] usunąć \App\Entity\Photo::$likeCounter oraz opierać "counter" na relacjach do like - mamy wtedy spójność danych niezależnie od sposobu uaktualniania counter'a, usunąć LikeService (nie będzie potrzebny)
     - [ ] czy ten user może likować to samo zdjęcie wielokrotnie? - powinno być to zabezpieczone
@@ -72,4 +72,4 @@ Staram się zawsze dostarczyć mu możliwie najbardziej konkretne wymagania i (s
 Również korzystam z jego rad i dyskutuję na ich temat w elementach gdzie coś można zaimplementować na kilka różnych sposobów, aby wybrać najlepsze rozwiązanie. 
 Po zaimplementowaniu kodu i jego przeglądzie, ew. dokonuje drobnych poprawek.
 Następnie ręcznie commituje zmiany.  
-Używam jeszcze AI do szerszej analizy kodu/projektu co mógłbym jeszcze usprawnić, a o czym sam nie pomyślałem.
+Na końcu, używam jeszcze AI do szerszej analizy kodu/projektu co mógłbym jeszcze usprawnić, a o czym sam nie pomyślałem.
